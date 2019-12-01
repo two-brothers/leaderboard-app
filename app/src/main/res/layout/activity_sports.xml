@@ -7,4 +7,10 @@
     android:orientation="vertical"
     tools:context=".sports.SportsActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_sport_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/view_sport_item" />
+
 </LinearLayout>

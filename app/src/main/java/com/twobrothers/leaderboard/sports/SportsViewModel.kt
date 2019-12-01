@@ -14,9 +14,13 @@ class SportsViewModel {
     init {
         val db = FirebaseFirestore.getInstance()
         db.collection("sports").get().addOnSuccessListener {
-            _sports.value = it.documents.map {
-                FirebaseSportsModel(it.data.toString()).toSportsModel()
+            _sports.value = it.documents.mapNotNull {
+                it.toObject(FirebaseSportsModel::class.java)?.toSportsModel()
             }
         }
+    }
+
+    fun onSportClick(title: String) {
+        println("clicked on $title")
     }
 }
