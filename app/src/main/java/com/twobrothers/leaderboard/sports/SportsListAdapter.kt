@@ -29,7 +29,7 @@ class SportsListAdapter(
         fun bind(sport: Sport) {
             itemView.findViewById<TextView>(R.id.text_sport).text = sport.title
             itemView.setOnClickListener {
-                onSportClickListener?.onClick(sport.title)
+                onSportClickListener?.onClick(sport.id)
             }
         }
     }
@@ -50,5 +50,5 @@ class SportsListAdapter(
 }
 
 interface OnSportClickListener {
-    fun onClick(title: String)
+    fun onClick(id: String)
 }

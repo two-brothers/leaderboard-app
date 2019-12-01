@@ -18,8 +18,8 @@ class SportsActivity : AppCompatActivity() {
 
         // Init list adapter
         sportsListAdapter = SportsListAdapter(object : OnSportClickListener {
-            override fun onClick(title: String) {
-                viewModel.onSportClick(title)
+            override fun onClick(id: String) {
+                viewModel.onSportClick(id)
             }
         })
         recycler_sport_list.apply {
