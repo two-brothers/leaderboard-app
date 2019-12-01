@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.twobrothers.leaderboard.R
+import com.twobrothers.leaderboard.games.GameActivity
 import kotlinx.android.synthetic.main.activity_sports.*
 
 class SportsActivity : AppCompatActivity() {
@@ -34,8 +35,8 @@ class SportsActivity : AppCompatActivity() {
         })
 
         viewModel.navigateToSport.observe(this, Observer {
-            it.getContentIfNotHandled()?.let {
-                // TODO: Navigate to scores
+            it.getContentIfNotHandled()?.let { sportId ->
+                startActivity(GameActivity.newIntent(this, sportId))
             }
         })
     }
