@@ -3,24 +3,24 @@ package com.twobrothers.leaderboard.sports
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
-import com.twobrothers.leaderboard.sports.models.FirebaseSportsModel
-import com.twobrothers.leaderboard.sports.models.SportsModel
+import com.twobrothers.leaderboard.sports.models.FirebaseSport
+import com.twobrothers.leaderboard.sports.models.Sport
 
 class SportsViewModel {
 
-    private val _sports = MutableLiveData<List<SportsModel>>()
-    val sports: LiveData<List<SportsModel>> = _sports
+    private val _sports = MutableLiveData<List<Sport>>()
+    val sports: LiveData<List<Sport>> = _sports
 
     init {
         val db = FirebaseFirestore.getInstance()
         db.collection("sports").get().addOnSuccessListener {
             _sports.value = it.documents.mapNotNull {
-                it.toObject(FirebaseSportsModel::class.java)?.toSportsModel()
+                it.toObject(FirebaseSport::class.java)?.toSportsModel()
             }
         }
     }
 
     fun onSportClick(title: String) {
-        println("clicked on $title")
+        // TODO: Implement on sport click
     }
 }

@@ -1,10 +1,10 @@
 package com.twobrothers.leaderboard.sports.models
 
-data class FirebaseSportsModel(
+data class FirebaseSport(
     val title: String = ""
 ) {
-    fun toSportsModel(): SportsModel {
-        return SportsModel(
+    fun toSportsModel(): Sport {
+        return Sport(
             title
         )
     }

@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.twobrothers.leaderboard.R
-import com.twobrothers.leaderboard.sports.models.SportsModel
+import com.twobrothers.leaderboard.sports.models.Sport
 
 
 class SportsListAdapter(
     private val onSportClickListener: OnSportClickListener?
-) : ListAdapter<SportsModel, SportsListAdapter.SportsListViewHolder>(SportsListDifferConfig()) {
+) : ListAdapter<Sport, SportsListAdapter.SportsListViewHolder>(SportsListDifferConfig()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SportsListViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -26,22 +26,22 @@ class SportsListAdapter(
     }
 
     inner class SportsListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(sportsModel: SportsModel) {
-            itemView.findViewById<TextView>(R.id.text_sport).text = sportsModel.title
+        fun bind(sport: Sport) {
+            itemView.findViewById<TextView>(R.id.text_sport).text = sport.title
             itemView.setOnClickListener {
-                onSportClickListener?.onClick(sportsModel.title)
+                onSportClickListener?.onClick(sport.title)
             }
         }
     }
 
-    private class SportsListDifferConfig : DiffUtil.ItemCallback<SportsModel>() {
-        override fun areItemsTheSame(oldItem: SportsModel, newItem: SportsModel): Boolean {
+    private class SportsListDifferConfig : DiffUtil.ItemCallback<Sport>() {
+        override fun areItemsTheSame(oldItem: Sport, newItem: Sport): Boolean {
             return oldItem.title == newItem.title
         }
 
         override fun areContentsTheSame(
-            oldItem: SportsModel,
-            newItem: SportsModel
+            oldItem: Sport,
+            newItem: Sport
         ): Boolean {
             return oldItem.title == newItem.title
         }

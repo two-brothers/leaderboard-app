@@ -16,6 +16,7 @@ class SportsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sports)
 
+        // Init list adapter
         sportsListAdapter = SportsListAdapter(object : OnSportClickListener {
             override fun onClick(title: String) {
                 viewModel.onSportClick(title)
@@ -27,10 +28,9 @@ class SportsActivity : AppCompatActivity() {
             adapter = sportsListAdapter
         }
 
+        // Init view model observers
         viewModel.sports.observe(this, Observer {
             sportsListAdapter.submitList(it)
-            println("submit list")
-            println(it)
         })
     }
 
