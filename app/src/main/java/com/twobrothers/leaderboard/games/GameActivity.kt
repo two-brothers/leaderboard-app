@@ -24,12 +24,16 @@ class GameActivity : AppCompatActivity() {
 
     }
 
-    private val viewModel: GameViewModel = GameViewModel()
+    private lateinit var viewModel: GameViewModel
     private lateinit var gameListAdapter: GameListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_games)
+
+        // Init view model
+        val sportId = this.intent.getStringExtra(EXTRA_SPORT_ID) ?: ""
+        viewModel = GameViewModel(sportId)
 
         // Init list adapter
         gameListAdapter = GameListAdapter(object : OnGameClickListener {
