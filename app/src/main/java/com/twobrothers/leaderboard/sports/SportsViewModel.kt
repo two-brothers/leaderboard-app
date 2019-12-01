@@ -3,6 +3,7 @@ package com.twobrothers.leaderboard.sports
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
+import com.twobrothers.leaderboard.core.Event
 import com.twobrothers.leaderboard.sports.models.FirebaseSport
 import com.twobrothers.leaderboard.sports.models.Sport
 
@@ -10,6 +11,9 @@ class SportsViewModel {
 
     private val _sports = MutableLiveData<List<Sport>>()
     val sports: LiveData<List<Sport>> = _sports
+
+    private val _navigateToSport = MutableLiveData<Event<String>>()
+    val navigateToSport: LiveData<Event<String>> = _navigateToSport
 
     init {
         val db = FirebaseFirestore.getInstance()
@@ -21,6 +25,6 @@ class SportsViewModel {
     }
 
     fun onSportClick(id: String) {
-        // TODO: Implement on sport click
+        _navigateToSport.value = Event(id)
     }
 }

@@ -32,6 +32,12 @@ class SportsActivity : AppCompatActivity() {
         viewModel.sports.observe(this, Observer {
             sportsListAdapter.submitList(it)
         })
+
+        viewModel.navigateToSport.observe(this, Observer {
+            it.getContentIfNotHandled()?.let {
+                // TODO: Navigate to scores
+            }
+        })
     }
 
 
