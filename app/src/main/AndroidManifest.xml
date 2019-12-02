@@ -25,6 +25,11 @@
             android:name=".games.GameActivity"
             android:label="Games"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".scores.ScoresActivity"
+            android:label="Scores"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
