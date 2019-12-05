@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.twobrothers.leaderboard.R
+import com.twobrothers.leaderboard.scores.ScoresActivity
 import kotlinx.android.synthetic.main.activity_games.*
 
 class GameActivity : AppCompatActivity() {
@@ -53,8 +54,8 @@ class GameActivity : AppCompatActivity() {
         })
 
         viewModel.navigateToGame.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { id ->
-                // TODO: Navigate to game
+            it.getContentIfNotHandled()?.let { gameId ->
+                startActivity(ScoresActivity.newIntent(this, gameId))
             }
         })
     }

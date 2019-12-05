@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.twobrothers.leaderboard.scores.models.ScoreCard
 
-class ScoresViewModel {
+class ScoresViewModel(gameId: String) {
 
     private val _scores = MutableLiveData<List<ScoreCard>>()
     val scores: LiveData<List<ScoreCard>> = _scores
