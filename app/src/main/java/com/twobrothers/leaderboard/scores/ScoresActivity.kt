@@ -25,7 +25,7 @@ class ScoresActivity : AppCompatActivity() {
     }
 
     private lateinit var viewModel: ScoresViewModel
-    // private lateinit var scoresListAdapter: ScoresListAdapter
+    private lateinit var scoresListAdapter: ScoresListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,19 +36,20 @@ class ScoresActivity : AppCompatActivity() {
         viewModel = ScoresViewModel(gameId)
 
         // Init list adapter
-        /* recycler_score_list.apply {
+        scoresListAdapter = ScoresListAdapter()
+        recycler_score_list.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = scoresListAdapter
-        }*/
+        }
 
         // Init view model observers
         viewModel.title.observe(this, Observer {
             this.title = it
         })
-        /* viewModel.scores.observe(this, Observer {
+        viewModel.scores.observe(this, Observer {
             scoresListAdapter.submitList(it)
-        })*/
+        })
     }
 
 
