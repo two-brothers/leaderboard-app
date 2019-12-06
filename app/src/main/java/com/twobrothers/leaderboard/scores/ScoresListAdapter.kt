@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.twobrothers.leaderboard.R
-import com.twobrothers.leaderboard.scores.models.ScoreCard
+import com.twobrothers.leaderboard.games.models.ScoreCard
 
 
 class ScoresListAdapter :

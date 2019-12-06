@@ -2,20 +2,21 @@ package com.twobrothers.leaderboard.scores
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.twobrothers.leaderboard.scores.models.ScoreCard
+import com.google.firebase.firestore.FirebaseFirestore
+import com.twobrothers.leaderboard.games.models.FirebaseGame
 
 class ScoresViewModel(gameId: String) {
 
-    private val _scores = MutableLiveData<List<ScoreCard>>()
-    val scores: LiveData<List<ScoreCard>> = _scores
+    private val _title = MutableLiveData<String>()
+    val title: LiveData<String> = _title
 
     init {
-        // TODO: Get score data
-        /* val db = FirebaseFirestore.getInstance()
-        db.collection("sports").get().addOnSuccessListener {
-            _sports.value = it.documents.mapNotNull {
-                it.toObject(FirebaseSport::class.java)?.toSportsModel(it.id)
+        val db = FirebaseFirestore.getInstance()
+        db.document("games/$gameId").get().addOnSuccessListener {
+            val game = it.toObject(FirebaseGame::class.java)?.toGameModel(it.id)
+            if (game != null) {
+                _title.value = game.title
             }
-        }*/
+        }
     }
 }

@@ -29,7 +29,7 @@ class ScoresActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sports)
+        setContentView(R.layout.activity_scores)
 
         // Init view model
         val gameId = this.intent.getStringExtra(EXTRA_GAME_ID) ?: ""
@@ -43,6 +43,9 @@ class ScoresActivity : AppCompatActivity() {
         }*/
 
         // Init view model observers
+        viewModel.title.observe(this, Observer {
+            this.title = it
+        })
         /* viewModel.scores.observe(this, Observer {
             scoresListAdapter.submitList(it)
         })*/
