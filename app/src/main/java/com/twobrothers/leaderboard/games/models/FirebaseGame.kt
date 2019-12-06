@@ -8,7 +8,7 @@ data class FirebaseGame(
         return Game(
             id,
             title,
-            leaders.mapIndexed { i, it ->
+            leaders.take(10).sortedBy { it.score }.mapIndexed { i, it ->
                 it.toScoreCard(i)
             }
         )
