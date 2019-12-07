@@ -26,6 +26,7 @@ class ScoresListAdapter :
 
     inner class ScoresListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(scoreCard: ScoreCard) {
+            itemView.findViewById<TextView>(R.id.text_player_name).text = scoreCard.player.name
             itemView.findViewById<TextView>(R.id.text_score).text = scoreCard.score.toString()
         }
     }

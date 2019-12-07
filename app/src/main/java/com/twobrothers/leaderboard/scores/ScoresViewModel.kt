@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.twobrothers.leaderboard.games.models.FirebaseGame
+import com.twobrothers.leaderboard.games.models.FirebasePlayer
 import com.twobrothers.leaderboard.games.models.ScoreCard
 
-class ScoresViewModel(gameId: String) {
+class ScoresViewModel(private val gameId: String) {
 
     private val _title = MutableLiveData<String>()
     val title: LiveData<String> = _title
@@ -15,13 +16,29 @@ class ScoresViewModel(gameId: String) {
     val scores: LiveData<List<ScoreCard>> = _scores
 
     init {
+        getData()
+    }
+
+    private fun getData() {
         val db = FirebaseFirestore.getInstance()
-        db.document("games/$gameId").get().addOnSuccessListener {
-            val game = it.toObject(FirebaseGame::class.java)?.toGameModel(it.id)
-            if (game != null) {
-                _title.value = game.title
-                _scores.value = game.scores
+        db.document("games/$gameId").addSnapshotListener { snapshot, e ->
+            if (e != null || snapshot == null || !snapshot.exists()) {
+                return@addSnapshotListener
             }
+
+            val game = snapshot.toObject(FirebaseGame::class.java)
+
+            game?.leaders?.forEachIndexed { index, leader ->
+                leader.player?.get()?.addOnSuccessListener {
+                    val player = it.toObject(FirebasePlayer::class.java)?.toPlayer()
+                        ?: return@addOnSuccessListener
+                    val scoreCard = ScoreCard(index, player, leader.score)
+                    val scores = _scores.value?.toMutableList() ?: mutableListOf()
+                    scores.add(scoreCard)
+                    _scores.value = scores.toList().take(10).sortedBy { it.score }
+                }
+            }
+
         }
     }
 }
