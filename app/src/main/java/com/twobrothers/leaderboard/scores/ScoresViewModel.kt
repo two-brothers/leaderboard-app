@@ -3,8 +3,8 @@ package com.twobrothers.leaderboard.scores
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
-import com.twobrothers.leaderboard.games.models.FirebaseGame
-import com.twobrothers.leaderboard.games.models.FirebasePlayer
+import com.twobrothers.leaderboard.core.responces.FirebaseGame
+import com.twobrothers.leaderboard.core.responces.FirebasePlayer
 import com.twobrothers.leaderboard.games.models.ScoreCard
 
 class ScoresViewModel(private val gameId: String) {

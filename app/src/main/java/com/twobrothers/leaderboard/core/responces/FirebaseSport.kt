@@ -1,4 +1,6 @@
-package com.twobrothers.leaderboard.sports.models
+package com.twobrothers.leaderboard.core.responces
+
+import com.twobrothers.leaderboard.sports.models.Sport
 
 data class FirebaseSport(
     val title: String = ""

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.twobrothers.leaderboard.core.Event
-import com.twobrothers.leaderboard.games.models.FirebaseGame
+import com.twobrothers.leaderboard.core.responces.FirebaseGame
 import com.twobrothers.leaderboard.games.models.Game
 
 class GameViewModel(sportId: String) {

@@ -1,6 +1,7 @@
-package com.twobrothers.leaderboard.games.models
+package com.twobrothers.leaderboard.core.responces
 
 import com.google.firebase.firestore.DocumentReference
+import com.twobrothers.leaderboard.games.models.Game
 
 data class FirebaseGame(
     val title: String = "",
@@ -17,16 +18,4 @@ data class FirebaseGame(
 data class FirebaseScoreCard(
     val player: DocumentReference? = null,
     val score: Int = 0
-)
-
-data class FirebasePlayer(
-    val name: String = ""
-) {
-    fun toPlayer(): Player {
-        return Player(name)
-    }
-}
-
-data class Player(
-    val name: String
 )
