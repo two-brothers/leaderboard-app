@@ -7,6 +7,18 @@
     android:orientation="vertical"
     tools:context=".scores.ScoresActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/layout_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_score_list"
         android:layout_width="match_parent"
