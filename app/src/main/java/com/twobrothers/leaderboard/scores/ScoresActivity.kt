@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.twobrothers.leaderboard.R
+import com.twobrothers.leaderboard.scores.new.NewScoreActivity
 import kotlinx.android.synthetic.main.activity_scores.*
 
 class ScoresActivity : AppCompatActivity() {
@@ -56,6 +57,11 @@ class ScoresActivity : AppCompatActivity() {
         viewModel.scores.observe(this, Observer {
             scoresListAdapter.submitList(it)
         })
+        viewModel.navigateToCreateScore.observe(this, Observer {
+            it.getContentIfNotHandled()?.let {
+                startActivity(NewScoreActivity.newIntent(this))
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -70,7 +76,7 @@ class ScoresActivity : AppCompatActivity() {
         super.onOptionsItemSelected(item)
         return when (item.itemId) {
             R.id.action_add -> {
-                // viewModel.onAddScoreClick()
+                viewModel.onAddScoreClick()
                 true
             }
             else -> super.onOptionsItemSelected(item)

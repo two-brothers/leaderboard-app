@@ -3,6 +3,7 @@ package com.twobrothers.leaderboard.scores
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
+import com.twobrothers.leaderboard.core.Event
 import com.twobrothers.leaderboard.core.responces.FirebaseGame
 import com.twobrothers.leaderboard.core.responces.FirebasePlayer
 import com.twobrothers.leaderboard.games.models.ScoreCard
@@ -14,6 +15,9 @@ class ScoresViewModel(private val gameId: String) {
 
     private val _scores = MutableLiveData<List<ScoreCard>>()
     val scores: LiveData<List<ScoreCard>> = _scores
+
+    private val _navigateToCreateScore = MutableLiveData<Event<Unit>>()
+    val navigateToCreateScore: LiveData<Event<Unit>> = _navigateToCreateScore
 
     init {
         getData()
@@ -40,5 +44,9 @@ class ScoresViewModel(private val gameId: String) {
             }
 
         }
+    }
+
+    fun onAddScoreClick() {
+        _navigateToCreateScore.value = Event(Unit)
     }
 }
