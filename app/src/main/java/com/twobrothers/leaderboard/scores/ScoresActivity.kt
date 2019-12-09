@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.twobrothers.leaderboard.R
+import com.twobrothers.leaderboard.core.lookups.GameType
 import com.twobrothers.leaderboard.scores.new.NewScoreActivity
 import kotlinx.android.synthetic.main.activity_scores.*
 
@@ -36,7 +37,6 @@ class ScoresActivity : AppCompatActivity() {
         setContentView(R.layout.activity_scores)
 
         // Init Action Bar
-        setSupportActionBar(toolbar_action_bar)
 
         // Init view model
         val gameId = this.intent.getStringExtra(EXTRA_GAME_ID) ?: ""
@@ -53,6 +53,11 @@ class ScoresActivity : AppCompatActivity() {
         // Init view model observers
         viewModel.title.observe(this, Observer {
             this.title = it
+        })
+        viewModel.gameType.observe(this, Observer {
+            if (it == GameType.HIGH_SCORE || it == GameType.LOW_SCORE) {
+                setSupportActionBar(toolbar_action_bar)
+            }
         })
         viewModel.scores.observe(this, Observer {
             scoresListAdapter.submitList(it)
