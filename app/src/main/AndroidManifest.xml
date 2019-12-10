@@ -32,7 +32,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".scores.new.NewScoreActivity"
+            android:name=".scores.add.AddScoreActivity"
             android:label=""
             android:screenOrientation="portrait" />
     </application>

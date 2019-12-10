@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.twobrothers.leaderboard.R
 import com.twobrothers.leaderboard.core.lookups.GameType
-import com.twobrothers.leaderboard.scores.new.NewScoreActivity
+import com.twobrothers.leaderboard.scores.add.AddScoreActivity
 import kotlinx.android.synthetic.main.activity_scores.*
 
 class ScoresActivity : AppCompatActivity() {
@@ -64,7 +64,7 @@ class ScoresActivity : AppCompatActivity() {
         })
         viewModel.navigateToCreateScore.observe(this, Observer {
             it.getContentIfNotHandled()?.let {
-                startActivity(NewScoreActivity.newIntent(this))
+                startActivity(AddScoreActivity.newIntent(this))
             }
         })
     }
