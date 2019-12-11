@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.twobrothers.leaderboard.R
 import com.twobrothers.leaderboard.databinding.ActivityAddScoreBinding
+import kotlinx.android.synthetic.main.activity_add_score.*
 
 class AddScoreActivity : AppCompatActivity() {
 
@@ -36,7 +37,11 @@ class AddScoreActivity : AppCompatActivity() {
             this.viewModel = this@AddScoreActivity.viewModel
         }
 
-        // Init view model observers
+        // Init listeners
+        button_save.setOnClickListener {
+            viewModel.onSaveScore()
+        }
+
     }
 
 
