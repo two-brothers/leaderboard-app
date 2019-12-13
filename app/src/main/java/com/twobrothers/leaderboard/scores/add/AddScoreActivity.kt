@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.RadioButton
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.twobrothers.leaderboard.R
 import com.twobrothers.leaderboard.databinding.ActivityAddScoreBinding
 import kotlinx.android.synthetic.main.activity_add_score.*
@@ -36,6 +38,18 @@ class AddScoreActivity : AppCompatActivity() {
             this.lifecycleOwner = this@AddScoreActivity
             this.viewModel = this@AddScoreActivity.viewModel
         }
+
+        // Init observers
+        viewModel.players.observe(this, Observer {
+            group_players.removeAllViews()
+            it.forEachIndexed { index, player ->
+                val view = RadioButton(baseContext)
+                view.text = player.name
+                view.id = index + 1
+                group_players.addView(view)
+            }
+
+        })
 
         // Init listeners
         button_save.setOnClickListener {

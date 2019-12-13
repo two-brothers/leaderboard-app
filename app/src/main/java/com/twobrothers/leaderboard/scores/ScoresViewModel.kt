@@ -41,7 +41,7 @@ class ScoresViewModel(private val gameId: String) {
 
             game.leaders.forEachIndexed { index, leader ->
                 leader.player?.get()?.addOnSuccessListener {
-                    val player = it.toObject(FirebasePlayer::class.java)?.toPlayer()
+                    val player = it.toObject(FirebasePlayer::class.java)?.toPlayer(it.id)
                         ?: return@addOnSuccessListener
                     val scoreCard = ScoreCard(index, player, leader.score)
                     val scores = _scores.value?.toMutableList() ?: mutableListOf()

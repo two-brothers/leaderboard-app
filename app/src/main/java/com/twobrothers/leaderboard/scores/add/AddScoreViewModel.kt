@@ -9,6 +9,7 @@ import com.twobrothers.leaderboard.players.models.Player
 class AddScoreViewModel {
 
     val score = MutableLiveData<String>()
+    val player = MutableLiveData<Int>()
 
     private val _players = MutableLiveData<List<Player>>()
     val players: LiveData<List<Player>> = _players
@@ -17,12 +18,12 @@ class AddScoreViewModel {
         val db = FirebaseFirestore.getInstance()
         db.collection("players").get().addOnSuccessListener {
             _players.value = it.documents.mapNotNull {
-                it.toObject(FirebasePlayer::class.java)?.toPlayer()
+                it.toObject(FirebasePlayer::class.java)?.toPlayer(it.id)
             }
         }
     }
 
     fun onSaveScore() {
-        println(score.value)
+        println("${player.value} ${score.value}")
     }
 }
