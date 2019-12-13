@@ -21,8 +21,8 @@ class ScoresViewModel(private val gameId: String) {
     private val _gameType = MutableLiveData<GameType>()
     val gameType: LiveData<GameType> = _gameType
 
-    private val _navigateToCreateScore = MutableLiveData<Event<Unit>>()
-    val navigateToCreateScore: LiveData<Event<Unit>> = _navigateToCreateScore
+    private val _navigateToCreateScore = MutableLiveData<Event<String>>()
+    val navigateToCreateScore: LiveData<Event<String>> = _navigateToCreateScore
 
     init {
         getData()
@@ -54,6 +54,6 @@ class ScoresViewModel(private val gameId: String) {
     }
 
     fun onAddScoreClick() {
-        _navigateToCreateScore.value = Event(Unit)
+        _navigateToCreateScore.value = Event(gameId)
     }
 }

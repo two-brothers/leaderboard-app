@@ -15,9 +15,13 @@ class AddScoreActivity : AppCompatActivity() {
 
     companion object {
 
+        private const val EXTRA_GAME_ID = "AddScoreActivity.Extras.GameId"
+
         @JvmStatic
-        fun newIntent(launchContext: Context): Intent {
-            return Intent(launchContext, AddScoreActivity::class.java)
+        fun newIntent(launchContext: Context, gameId: String): Intent {
+            val intent = Intent(launchContext, AddScoreActivity::class.java)
+            intent.putExtra(EXTRA_GAME_ID, gameId)
+            return intent
         }
 
     }
@@ -29,7 +33,8 @@ class AddScoreActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_score)
 
         // Init view model
-        viewModel = AddScoreViewModel()
+        val gameId = this.intent.getStringExtra(EXTRA_GAME_ID) ?: ""
+        viewModel = AddScoreViewModel(gameId)
 
         // Init data binding
         DataBindingUtil.setContentView<ActivityAddScoreBinding>(

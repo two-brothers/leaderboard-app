@@ -63,8 +63,8 @@ class ScoresActivity : AppCompatActivity() {
             scoresListAdapter.submitList(it)
         })
         viewModel.navigateToCreateScore.observe(this, Observer {
-            it.getContentIfNotHandled()?.let {
-                startActivity(AddScoreActivity.newIntent(this))
+            it.getContentIfNotHandled()?.let { gameId ->
+                startActivity(AddScoreActivity.newIntent(this, gameId))
             }
         })
     }
