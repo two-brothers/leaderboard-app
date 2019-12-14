@@ -1,31 +1,23 @@
-import 'package:rxdart/rxdart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'bloc.dart';
 import '../models/sports_model.dart';
 
 class SportsBloc implements Bloc {
-  final _sportsController = BehaviorSubject<List<SportsModel>>();
-  List<SportsModel> _sports;
+  final Stream<List<SportsModel>> _content$;
 
-  Stream<List<SportsModel>> get stream => _sportsController.stream;
+  SportsBloc() : _content$ = _initContent$;
 
-  SportsBloc() {
-    Firestore.instance
-        .collection('sports')
-        .getDocuments()
-        .then((snapshot) => snapshot.documents)
-        .then((documents) => documents.map((document) => SportsModel.fromJson(document.data)))
-        .then((records) => records.toList())
-        .asStream()
-        .listen((records) {
-          _sports = records;
-          _sportsController.add(_sports);
-        });
-  }
+  Stream<List<SportsModel>> get stream => _content$;
+
+  static Stream<List<SportsModel>> get _initContent$ =>
+      Firestore.instance
+          .collection('sports')
+          .snapshots()
+          .map((snapshot) => snapshot.documents)
+          .map((documents) => documents.map((document) => SportsModel.fromJson(document.data)))
+          .map((records) => records.toList());
 
   @override
-  void dispose() {
-    _sportsController.close();
-  }
+  void dispose() {}
 }
