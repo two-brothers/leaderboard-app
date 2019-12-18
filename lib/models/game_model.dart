@@ -15,12 +15,12 @@ class GameModel extends Equatable {
       @required this.gameType,
       @required this.summary});
 
-  factory GameModel.fromJson(Map<String, dynamic> parsedJson) {
+  factory GameModel.fromJson(String id, Map<String, dynamic> parsedJson) {
     return GameModel(
-        id: parsedJson['id'],
+        id: id,
         title: parsedJson['title'],
         sportId: parsedJson['sportId'],
-        gameType: parsedJson['gameType'],
+        gameType: GameType.values[parsedJson['gameType']],
         summary: parsedJson['summary']);
   }
 

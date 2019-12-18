@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'bloc/bloc_provider.dart';
 import 'bloc/sports_bloc.dart';
+import 'game_list.dart';
 import 'models/sports_model.dart';
 
 class SportsList extends StatelessWidget {
@@ -20,6 +21,10 @@ class SportsList extends StatelessWidget {
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, index) => ListTile(
                           title: Text('${snapshot.data[index].title}'),
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => GameList(sport: snapshot.data[index])),
+                          ),
                         ))
                 : Center(child: CircularProgressIndicator())));
   }

@@ -10,13 +10,12 @@ class SportsBloc implements Bloc {
 
   Stream<List<SportsModel>> get stream => _content$;
 
-  static Stream<List<SportsModel>> get _initContent$ =>
-      Firestore.instance
-          .collection('sports')
-          .snapshots()
-          .map((snapshot) => snapshot.documents)
-          .map((documents) => documents.map((document) => SportsModel.fromJson(document.data)))
-          .map((records) => records.toList());
+  static Stream<List<SportsModel>> get _initContent$ => Firestore.instance
+      .collection('sports')
+      .snapshots()
+      .map((snapshot) => snapshot.documents)
+      .map((documents) => documents.map((document) => SportsModel.fromJson(document.documentID, document.data)))
+      .map((records) => records.toList());
 
   @override
   void dispose() {}

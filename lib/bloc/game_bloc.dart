@@ -10,14 +10,16 @@ class GameBloc implements Bloc {
   GameBloc() : _gamesBySport = {};
 
   Stream<List<GameModel>> getGamesIn(SportsModel sport) {
-    return _gamesBySport[sport] ??
-        Firestore.instance
-            .collection('games')
-            .where('sport', isEqualTo: '/sports/${sport.id}')
-            .snapshots()
-            .map((snapshot) => snapshot.documents)
-            .map((documents) => documents.map((document) => GameModel.fromJson(document.data)))
-            .map((records) => records.toList());
+    if (_gamesBySport[sport] == null) {
+      _gamesBySport[sport] = Firestore.instance
+          .collection('games')
+          .where('sportId', isEqualTo: sport.id)
+          .snapshots()
+          .map((snapshot) => snapshot.documents)
+          .map((documents) => documents.map((document) => GameModel.fromJson(document.documentID, document.data)))
+          .map((records) => records.toList());
+    }
+    return _gamesBySport[sport];
   }
 
   @override
