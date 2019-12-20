@@ -9,7 +9,7 @@ class PlayerBloc implements Bloc {
 
   PlayerBloc() : _players = {};
 
-  Stream<PlayerModel> getPlayerByRef(DocumentReference playerRef) {
+  Stream<PlayerModel> getPlayerStreamByRef(DocumentReference playerRef) {
     if (_players[playerRef] == null) {
       _players[playerRef] = BehaviorSubject<PlayerModel>();
       playerRef
