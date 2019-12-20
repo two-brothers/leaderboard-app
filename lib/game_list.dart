@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'bloc/bloc_provider.dart';
 import 'bloc/game_bloc.dart';
+import 'game.dart';
 import 'models/game_model.dart';
 import 'models/sports_model.dart';
 
@@ -24,7 +25,9 @@ class GameList extends StatelessWidget {
                 ? ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, index) => ListTile(
-                          title: Text('${snapshot.data[index].title}')
+                          title: Text('${snapshot.data[index].title}'),
+                          onTap: () => Navigator.push(
+                              context, MaterialPageRoute(builder: (context) => Game(game: snapshot.data[index]))),
                         ))
                 : Center(child: CircularProgressIndicator())));
   }
