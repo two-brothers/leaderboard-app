@@ -11,7 +11,7 @@ class SportsModel extends Equatable {
     return SportsModel(id: id, title: parsedJson['title']);
   }
 
-  // Two SportsModel objects with the same id will be assumed to be identical
+  // Two objects with the same id will be assumed to be identical
   @override
   List<Object> get props => [id];
 }
