@@ -6,6 +6,7 @@ import 'bloc.dart';
 
 class PlayerBloc implements Bloc {
   final Map<DocumentReference, BehaviorSubject<PlayerModel>> _players;
+  BehaviorSubject<List<PlayerModel>> _playersController;
 
   PlayerBloc() : _players = {};
 
@@ -22,6 +23,20 @@ class PlayerBloc implements Bloc {
 
   Future<DocumentReference> addPlayer(String name) {
     return Firestore.instance.collection('players').add({'name': name});
+  }
+
+  Stream<List<PlayerModel>> get players {
+    if (_playersController == null) {
+      _playersController = BehaviorSubject<List<PlayerModel>>();
+      Firestore.instance
+          .collection('players')
+          .snapshots()
+          .map((snapshot) => snapshot.documents)
+          .map((documents) => documents.map((document) => PlayerModel.fromJson(document.documentID, document.data)))
+          .map((records) => records.toList())
+          .listen((players) => _playersController.add(players));
+    }
+    return _playersController.stream;
   }
 
   @override
