@@ -21,14 +21,15 @@ class Game extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Text(game.summary, style: Theme.of(context).textTheme.title),
-              ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: game.leaderboard.length,
-                  itemBuilder: (context, index) => StreamBuilder<PlayerModel>(
-                      stream: bloc.getPlayerStreamByRef(game.leaderboard[index].playerRef),
-                      builder: (context, snapshot) => ListTile(
-                          title: Text(
-                              '${index + 1}. ${snapshot.hasData ? game.leaderboard[index].display(snapshot.data) : '...'}'))))
+              Expanded(
+                child: ListView.builder(
+                    itemCount: game.leaderboard.length,
+                    itemBuilder: (context, index) => StreamBuilder<PlayerModel>(
+                        stream: bloc.getPlayerStreamByRef(game.leaderboard[index].playerRef),
+                        builder: (context, snapshot) => ListTile(
+                            title: Text(
+                                '${index + 1}. ${snapshot.hasData ? game.leaderboard[index].display(snapshot.data) : '...'}')))),
+              )
             ],
           )),
     );
