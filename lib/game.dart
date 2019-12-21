@@ -4,6 +4,7 @@ import 'bloc/bloc_provider.dart';
 import 'bloc/player_bloc.dart';
 import 'models/game_model.dart';
 import 'models/player_model.dart';
+import 'new_player.dart';
 
 class Game extends StatelessWidget {
   final GameModel game;
@@ -32,6 +33,10 @@ class Game extends StatelessWidget {
               )
             ],
           )),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NewPlayer()))
+      ),
     );
   }
 }

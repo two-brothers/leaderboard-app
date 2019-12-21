@@ -20,6 +20,10 @@ class PlayerBloc implements Bloc {
     return _players[playerRef];
   }
 
+  Future<DocumentReference> addPlayer(String name) {
+    return Firestore.instance.collection('players').add({'name': name});
+  }
+
   @override
   void dispose() {
     _players.forEach((_, subject) => subject.close());

@@ -15,6 +15,9 @@ class MyApp extends StatelessWidget {
       title: 'Leaderboard',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        textTheme: TextTheme(
+          button: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white),
+        )
       ),
       home: SportsList(),
     ));
