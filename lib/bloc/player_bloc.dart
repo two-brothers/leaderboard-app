@@ -42,5 +42,8 @@ class PlayerBloc implements Bloc {
   @override
   void dispose() {
     _players.forEach((_, subject) => subject.close());
+    if (_playersController != null) {
+      _playersController.close();
+    }
   }
 }

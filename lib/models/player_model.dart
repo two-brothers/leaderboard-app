@@ -8,9 +8,7 @@ class PlayerModel extends Equatable {
   PlayerModel({@required this.id, @required this.name});
 
   factory PlayerModel.fromJson(String id, Map<String, dynamic> parsedJson) {
-    return PlayerModel(
-        id: id,
-        name: parsedJson['name']);
+    return PlayerModel(id: id, name: parsedJson['name']);
   }
 
   // Two objects with the same id will be assumed to be identical
