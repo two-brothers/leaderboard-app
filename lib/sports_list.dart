@@ -8,10 +8,10 @@ import 'models/sports_model.dart';
 class SportsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final SportsBloc bloc = BlocProvider.of<SportsBloc>(context);
+    final SportsBloc _bloc = BlocProvider.of<SportsBloc>(context);
 
     return StreamBuilder<List<SportsModel>>(
-        stream: bloc.stream,
+        stream: _bloc.stream,
         builder: (context, snapshot) => Scaffold(
             appBar: AppBar(
               title: Text("Sports"),

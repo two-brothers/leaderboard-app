@@ -11,9 +11,9 @@ class NewMatch extends StatefulWidget {
 
 class _NewMatchState extends State<NewMatch> {
   final _formKey = GlobalKey<FormState>();
-  final format = DateFormat("d MMM yyyy");
+  final _format = DateFormat("d MMM yyyy");
 
-  DateTime dt = DateTime.now();
+  DateTime _dt = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +25,8 @@ class _NewMatchState extends State<NewMatch> {
                 key: _formKey,
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                   DateTimeField(
-                    format: format,
-                    initialValue: dt,
+                    format: _format,
+                    initialValue: _dt,
                     decoration: InputDecoration(hintText: 'Date of match'),
                     validator: (value) => value == null ? 'Enter date of match' : null,
                     onShowPicker: (context, currentValue) => showDatePicker(
@@ -34,7 +34,7 @@ class _NewMatchState extends State<NewMatch> {
                         firstDate: DateTime(1900),
                         initialDate: currentValue ?? DateTime.now(),
                         lastDate: DateTime(2100)),
-                    onSaved: (value) => setState(() => dt = value),
+                    onSaved: (value) => setState(() => _dt = value),
                   ),
                   PlayerSelector()
                 ]))) );

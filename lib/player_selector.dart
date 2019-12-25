@@ -15,10 +15,10 @@ class _PlayerSelectorState extends State<PlayerSelector> {
 
   @override
   Widget build(BuildContext context) {
-    final PlayerBloc bloc = BlocProvider.of<PlayerBloc>(context);
+    final PlayerBloc _bloc = BlocProvider.of<PlayerBloc>(context);
 
     return StreamBuilder<List<PlayerModel>>(
-        stream: bloc.players,
+        stream: _bloc.players,
         builder: (context, snapshot) => _player == null
             ? AutoCompleteTextField<PlayerModel>(
                 // the AutoCompleteTextField suggestions are set during initialization

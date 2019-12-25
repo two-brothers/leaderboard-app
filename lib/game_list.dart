@@ -13,10 +13,10 @@ class GameList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GameBloc bloc = BlocProvider.of<GameBloc>(context);
+    final GameBloc _bloc = BlocProvider.of<GameBloc>(context);
 
     return StreamBuilder<List<GameModel>>(
-        stream: bloc.getGamesIn(sport),
+        stream: _bloc.getGamesIn(sport),
         builder: (context, snapshot) => Scaffold(
             appBar: AppBar(
               title: Text(sport.title),
