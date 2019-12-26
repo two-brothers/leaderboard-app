@@ -16,7 +16,7 @@ class NewPlayer extends StatefulWidget {
 class _NewPlayerState extends State<NewPlayer> {
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
-  String name;
+  String _name;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _NewPlayerState extends State<NewPlayer> {
                           initialValue: this.widget.initialValue,
                           decoration: InputDecoration(hintText: 'Player Name'),
                           validator: (value) => value.isEmpty ? 'Enter player name' : null,
-                          onSaved: (value) => setState(() => name = value)),
+                          onSaved: (value) => setState(() => _name = value)),
                       Center(
                           child: Padding(
                               padding: const EdgeInsets.all(16),
@@ -46,9 +46,9 @@ class _NewPlayerState extends State<NewPlayer> {
                                   if (_formKey.currentState.validate()) {
                                     _formKey.currentState.save();
                                     setState(() => _saving = true);
-                                    _bloc.addPlayer(name).then((_) {
+                                    _bloc.addPlayer(_name).then((_) {
                                       setState(() => _saving = false);
-                                      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Added $name')));
+                                      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Added $_name')));
                                       _formKey.currentState.reset();
                                     });
                                   }

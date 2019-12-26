@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
@@ -14,12 +15,19 @@ class NewMatch extends StatefulWidget {
   NewMatch({@required this.game});
 
   @override
-  _NewMatchState createState() => _NewMatchState();
+  _NewMatchState createState() {
+    switch (game.gameType) {
+      case GameType.HIGH_SCORE: // intentional fall-through
+      case GameType.LOW_SCORE:
+        return _NewPersonalScoreState();
+      case GameType.RANKING:
+        return _NewMatchState();
+    }
+  }
 }
 
 class _NewMatchState extends State<NewMatch> {
   DateTime _dt = DateTime.now();
-  PlayerModel _player;
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +54,32 @@ class _NewMatchState extends State<NewMatch> {
                         lastDate: DateTime(2100)),
                     onSaved: (value) => setState(() => _dt = value),
                   ),
-                  PlayerSelectorFormField(
-                      hintText: 'Player name',
-                      validator: (value) => value == null ? 'Choose player' : null,
-                      onSaved: (value) => setState(() => _player = value))
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: formElements(context),
+                  )
                 ]))));
   }
+
+  List<Widget> formElements(BuildContext context) => [];
+}
+
+class _NewPersonalScoreState extends _NewMatchState {
+  PlayerModel _player;
+  int _score;
+
+  @override
+  List<Widget> formElements(BuildContext context) => [
+        PlayerSelectorFormField(
+            hintText: 'Player name',
+            validator: (value) => value == null ? 'Choose player' : null,
+            onSaved: (value) => setState(() => _player = value)),
+        TextFormField(
+            decoration: InputDecoration(hintText: 'Score'),
+            inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+            keyboardType: TextInputType.number,
+            validator: (value) => value == '' || int.parse(value) == 0 ? 'Score must be a positive integer' : null,
+            onSaved: (value) => setState(() => _score = int.parse(value))
+        )
+      ];
 }
