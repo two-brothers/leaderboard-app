@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
-import 'player_selector.dart';
+import 'models/player_model.dart';
+import 'player_selector_formfield.dart';
 
 class NewMatch extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _NewMatchState extends State<NewMatch> {
   final _format = DateFormat("d MMM yyyy");
 
   DateTime _dt = DateTime.now();
+  PlayerModel _player;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,10 @@ class _NewMatchState extends State<NewMatch> {
                         lastDate: DateTime(2100)),
                     onSaved: (value) => setState(() => _dt = value),
                   ),
-                  PlayerSelector()
-                ]))) );
+                  PlayerSelectorFormField(
+                      decoration: InputDecoration(hintText: 'Player name'),
+                      validator: (value) => value == null ? 'Choose player' : null,
+                      onSaved: (value) => setState(() => _player = value))
+                ]))));
   }
 }
