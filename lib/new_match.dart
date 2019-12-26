@@ -58,6 +58,7 @@ abstract class _NewMatchState extends State<NewMatch> {
                           initialDate: currentValue ?? DateTime.now(),
                           lastDate: DateTime(2100)),
                       onSaved: (value) => setState(() => _dt = value),
+                      readOnly: true
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
