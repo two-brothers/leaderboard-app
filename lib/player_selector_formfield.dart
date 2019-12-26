@@ -51,20 +51,14 @@ class PlayerSelectorFormField extends FormField<PlayerModel> {
                                 )),
                         ConditionalBuilder(
                             condition: state.value != null,
-                            builder: (context) => Padding(
-                                padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                                child: Row(children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-                                    child: Icon(Icons.person),
-                                  ),
-                                  Text(state.value.name),
-                                  Expanded(
-                                      child: Align(
-                                          alignment: Alignment.centerRight,
-                                          child: IconButton(
-                                              icon: Icon(Icons.clear), onPressed: () => state.didChange(null))))
-                                ]))),
+                            builder: (context) => TextFormField(
+//                                textAlignVertical: TextAlignVertical.center,
+                                initialValue: state.value.name,
+                                readOnly: true,
+                                decoration: InputDecoration(
+                                    prefixIcon: Icon(Icons.person),
+                                    suffix:
+                                        IconButton(icon: Icon(Icons.clear), onPressed: () => state.didChange(null))))),
                         ConditionalBuilder(
                             condition: state.hasError,
                             builder: (context) => Text(state.errorText, style: TextStyle(color: Colors.red)))
