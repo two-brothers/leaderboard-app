@@ -1,4 +1,5 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 
 import 'bloc/bloc_provider.dart';
@@ -23,8 +24,9 @@ class PlayerSelectorFormField extends FormField<PlayerModel> {
               return StreamBuilder<List<PlayerModel>>(
                   stream: _bloc.players,
                   builder: (context, snapshot) => Column(children: <Widget>[
-                        state.value == null
-                            ? AutoCompleteTextField<PlayerModel>(
+                        ConditionalBuilder(
+                            condition: state.value == null,
+                            builder: (context) => AutoCompleteTextField<PlayerModel>(
                                 // the AutoCompleteTextField suggestions are set during initialization
                                 // I do not know how to call the update function when the stream changes
                                 // instead, use a new key on every rebuild to reload the whole widget
@@ -35,9 +37,10 @@ class PlayerSelectorFormField extends FormField<PlayerModel> {
                                     player.name.toLowerCase().startsWith(input.toLowerCase()),
                                 itemSorter: (playerA, playerB) => playerA.name.compareTo(playerB.name),
                                 itemSubmitted: (submitted) => state.didChange(submitted),
-                                suggestions: snapshot.hasData ? snapshot.data : [],
-                              )
-                            : Padding(
+                                suggestions: snapshot.hasData ? snapshot.data : [])),
+                        ConditionalBuilder(
+                            condition: state.value != null,
+                            builder: (context) => Padding(
                                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                                 child: Row(children: <Widget>[
                                   Padding(
@@ -50,8 +53,10 @@ class PlayerSelectorFormField extends FormField<PlayerModel> {
                                           alignment: Alignment.centerRight,
                                           child: IconButton(
                                               icon: Icon(Icons.edit), onPressed: () => state.didChange(null))))
-                                ])),
-                        state.hasError ? Text(state.errorText, style: TextStyle(color: Colors.red)) : SizedBox.shrink()
+                                ]))),
+                        ConditionalBuilder(
+                            condition: state.hasError,
+                            builder: (context) => Text(state.errorText, style: TextStyle(color: Colors.red)))
                       ]));
             });
 }

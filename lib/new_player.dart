@@ -1,3 +1,4 @@
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 
 import 'bloc/bloc_provider.dart';
@@ -20,7 +21,8 @@ class _NewPlayerState extends State<NewPlayer> {
 
     return Scaffold(
         appBar: AppBar(title: Text('Create New Player')),
-        body: Builder( // use a builder so Scaffold.of will refer to this Scaffold
+        body: Builder(
+          // use a builder so Scaffold.of will refer to this Scaffold
           builder: (BuildContext context) => Container(
               padding: EdgeInsets.all(16),
               child: Form(
@@ -50,7 +52,10 @@ class _NewPlayerState extends State<NewPlayer> {
                                 child: Text('CREATE', style: Theme.of(context).textTheme.button),
                                 color: Theme.of(context).primaryColor,
                               ))),
-                      _saving ? Expanded(child: Center(child: CircularProgressIndicator())) : SizedBox.shrink()
+                      ConditionalBuilder(
+                        condition: _saving,
+                        builder: (context) => Expanded(child: Center(child: CircularProgressIndicator())),
+                      )
                     ],
                   ))),
         ));
