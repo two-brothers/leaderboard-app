@@ -52,7 +52,7 @@ class PlayerSelectorFormField extends FormField<PlayerModel> {
                                       child: Align(
                                           alignment: Alignment.centerRight,
                                           child: IconButton(
-                                              icon: Icon(Icons.edit), onPressed: () => state.didChange(null))))
+                                              icon: Icon(Icons.clear), onPressed: () => state.didChange(null))))
                                 ]))),
                         ConditionalBuilder(
                             condition: state.hasError,
