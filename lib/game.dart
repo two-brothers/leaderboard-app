@@ -35,7 +35,7 @@ class Game extends StatelessWidget {
           )),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NewMatch()))
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NewMatch(game: game)))
       ),
     );
   }
