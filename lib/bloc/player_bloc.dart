@@ -21,9 +21,7 @@ class PlayerBloc implements Bloc {
     return _players[playerRef];
   }
 
-  Future<DocumentReference> addPlayer(String name) {
-    return Firestore.instance.collection('players').add({'name': name});
-  }
+  Future<DocumentReference> addPlayer(String name) => Firestore.instance.collection('players').add({'name': name});
 
   Stream<List<PlayerModel>> get players {
     if (_playersController == null) {

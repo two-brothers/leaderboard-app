@@ -42,20 +42,19 @@ class _NewPlayerState extends State<NewPlayer> {
                           child: Padding(
                               padding: const EdgeInsets.all(16),
                               child: RaisedButton(
-                                onPressed: () {
-                                  if (_formKey.currentState.validate()) {
-                                    _formKey.currentState.save();
-                                    setState(() => _saving = true);
-                                    _bloc.addPlayer(_name).then((_) {
-                                      setState(() => _saving = false);
-                                      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Added $_name')));
-                                      _formKey.currentState.reset();
-                                    });
-                                  }
-                                },
-                                child: Text('CREATE', style: Theme.of(context).textTheme.button),
-                                color: Theme.of(context).primaryColor,
-                              ))),
+                                  onPressed: () {
+                                    if (_formKey.currentState.validate()) {
+                                      _formKey.currentState.save();
+                                      setState(() => _saving = true);
+                                      _bloc.addPlayer(_name).then((_) {
+                                        setState(() => _saving = false);
+                                        Scaffold.of(context).showSnackBar(SnackBar(content: Text('Added $_name')));
+                                        _formKey.currentState.reset();
+                                      });
+                                    }
+                                  },
+                                  child: Text('CREATE', style: Theme.of(context).textTheme.button),
+                                  color: Theme.of(context).primaryColor))),
                       ConditionalBuilder(
                         condition: _saving,
                         builder: (context) => Expanded(child: Center(child: CircularProgressIndicator())),
