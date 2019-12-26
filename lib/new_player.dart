@@ -5,15 +5,18 @@ import 'bloc/bloc_provider.dart';
 import 'bloc/player_bloc.dart';
 
 class NewPlayer extends StatefulWidget {
+  final String initialValue;
+
+  NewPlayer({this.initialValue});
+
   @override
   _NewPlayerState createState() => _NewPlayerState();
 }
 
 class _NewPlayerState extends State<NewPlayer> {
   final _formKey = GlobalKey<FormState>();
-
-  String _name = '';
   bool _saving = false;
+  String name;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +34,10 @@ class _NewPlayerState extends State<NewPlayer> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       TextFormField(
+                          initialValue: this.widget.initialValue,
                           decoration: InputDecoration(hintText: 'Player Name'),
                           validator: (value) => value.isEmpty ? 'Enter player name' : null,
-                          onSaved: (value) => setState(() => _name = value)),
+                          onSaved: (value) => setState(() => name = value)),
                       Center(
                           child: Padding(
                               padding: const EdgeInsets.all(16),
@@ -42,9 +46,9 @@ class _NewPlayerState extends State<NewPlayer> {
                                   if (_formKey.currentState.validate()) {
                                     _formKey.currentState.save();
                                     setState(() => _saving = true);
-                                    _bloc.addPlayer(_name).then((_) {
+                                    _bloc.addPlayer(name).then((_) {
                                       setState(() => _saving = false);
-                                      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Added $_name')));
+                                      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Added $name')));
                                       _formKey.currentState.reset();
                                     });
                                   }

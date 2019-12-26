@@ -21,6 +21,7 @@ class PlayerSelectorFormField extends FormField<PlayerModel> {
             autovalidate: autovalidate,
             builder: (FormFieldState<PlayerModel> state) {
               final PlayerBloc _bloc = BlocProvider.of<PlayerBloc>(state.context);
+              String name = initialValue == null ? '' : initialValue.name;
 
               return StreamBuilder<List<PlayerModel>>(
                   stream: _bloc.players,
@@ -28,24 +29,26 @@ class PlayerSelectorFormField extends FormField<PlayerModel> {
                         ConditionalBuilder(
                             condition: state.value == null,
                             builder: (context) => AutoCompleteTextField<PlayerModel>(
-                                // the AutoCompleteTextField suggestions are set during initialization
-                                // I do not know how to call the update function when the stream changes
-                                // instead, use a new key on every rebuild to reload the whole widget
-                                key: GlobalKey<AutoCompleteTextFieldState<PlayerModel>>(),
-                                decoration: InputDecoration(
-                                    hintText: hintText,
-                                    suffix: IconButton(
-                                        icon: Icon(Icons.add),
-                                        onPressed: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => NewPlayer()),
-                                            ))),
-                                itemBuilder: (context, player) => ListTile(title: Text(player.name)),
-                                itemFilter: (player, input) =>
-                                    player.name.toLowerCase().startsWith(input.toLowerCase()),
-                                itemSorter: (playerA, playerB) => playerA.name.compareTo(playerB.name),
-                                itemSubmitted: (submitted) => state.didChange(submitted),
-                                suggestions: snapshot.hasData ? snapshot.data : [])),
+                                  // the AutoCompleteTextField suggestions are set during initialization
+                                  // I do not know how to call the update function when the stream changes
+                                  // instead, use a new key on every rebuild to reload the whole widget
+                                  key: GlobalKey<AutoCompleteTextFieldState<PlayerModel>>(),
+                                  decoration: InputDecoration(
+                                      hintText: hintText,
+                                      suffix: IconButton(
+                                          icon: Icon(Icons.add),
+                                          onPressed: () => Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => NewPlayer(initialValue: name)),
+                                              ))),
+                                  itemBuilder: (context, player) => ListTile(title: Text(player.name)),
+                                  itemFilter: (player, input) =>
+                                      player.name.toLowerCase().startsWith(input.toLowerCase()),
+                                  itemSorter: (playerA, playerB) => playerA.name.compareTo(playerB.name),
+                                  itemSubmitted: (submitted) => state.didChange(submitted),
+                                  suggestions: snapshot.hasData ? snapshot.data : [],
+                                  textChanged: (String s) => name = s,
+                                )),
                         ConditionalBuilder(
                             condition: state.value != null,
                             builder: (context) => Padding(
