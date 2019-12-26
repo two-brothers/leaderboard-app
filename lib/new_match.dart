@@ -47,7 +47,7 @@ class _NewMatchState extends State<NewMatch> {
                     onSaved: (value) => setState(() => _dt = value),
                   ),
                   PlayerSelectorFormField(
-                      decoration: InputDecoration(hintText: 'Player name'),
+                      hintText: 'Player name',
                       validator: (value) => value == null ? 'Choose player' : null,
                       onSaved: (value) => setState(() => _player = value))
                 ]))));

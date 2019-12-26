@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'bloc/bloc_provider.dart';
 import 'bloc/player_bloc.dart';
 import 'models/player_model.dart';
+import 'new_player.dart';
 
 class PlayerSelectorFormField extends FormField<PlayerModel> {
   PlayerSelectorFormField(
@@ -12,7 +13,7 @@ class PlayerSelectorFormField extends FormField<PlayerModel> {
       FormFieldValidator<PlayerModel> validator,
       PlayerModel initialValue,
       bool autovalidate = false,
-      InputDecoration decoration})
+      String hintText})
       : super(
             onSaved: onSaved,
             validator: validator,
@@ -31,7 +32,14 @@ class PlayerSelectorFormField extends FormField<PlayerModel> {
                                 // I do not know how to call the update function when the stream changes
                                 // instead, use a new key on every rebuild to reload the whole widget
                                 key: GlobalKey<AutoCompleteTextFieldState<PlayerModel>>(),
-                                decoration: decoration,
+                                decoration: InputDecoration(
+                                    hintText: hintText,
+                                    suffix: IconButton(
+                                        icon: Icon(Icons.add),
+                                        onPressed: () => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => NewPlayer()),
+                                            ))),
                                 itemBuilder: (context, player) => ListTile(title: Text(player.name)),
                                 itemFilter: (player, input) =>
                                     player.name.toLowerCase().startsWith(input.toLowerCase()),
