@@ -24,7 +24,7 @@ class NewMatch extends StatefulWidget {
       case GameType.LOW_SCORE:
         return _NewPersonalScoreState();
       case GameType.RANKING:
-        return null;
+        return _RankScoreState();
     }
   }
 }
@@ -48,18 +48,17 @@ abstract class _NewMatchState extends State<NewMatch> {
                       child: Text(this.widget.game.title, style: Theme.of(context).textTheme.title),
                     ),
                     DateTimeField(
-                      format: this.widget._format,
-                      initialValue: _dt,
-                      decoration: InputDecoration(hintText: 'Date of match'),
-                      validator: (value) => value == null ? 'Enter date of match' : null,
-                      onShowPicker: (context, currentValue) => showDatePicker(
-                          context: context,
-                          firstDate: DateTime(1900),
-                          initialDate: currentValue ?? DateTime.now(),
-                          lastDate: DateTime(2100)),
-                      onSaved: (value) => setState(() => _dt = value),
-                      readOnly: true
-                    ),
+                        format: this.widget._format,
+                        initialValue: _dt,
+                        decoration: InputDecoration(hintText: 'Date of match'),
+                        validator: (value) => value == null ? 'Enter date of match' : null,
+                        onShowPicker: (context, currentValue) => showDatePicker(
+                            context: context,
+                            firstDate: DateTime(1900),
+                            initialDate: currentValue ?? DateTime.now(),
+                            lastDate: DateTime(2100)),
+                        onSaved: (value) => setState(() => _dt = value),
+                        readOnly: true),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: formElements(context),
@@ -74,7 +73,13 @@ abstract class _NewMatchState extends State<NewMatch> {
                                     setState(() => _saving = true);
                                     save(context).then((_) {
                                       setState(() => _saving = false);
-                                      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Saved Record')));
+                                      Scaffold.of(context).showSnackBar(
+                                          SnackBar(content: Text('Saved Record'), backgroundColor: Colors.green));
+                                      this.widget._formKey.currentState.reset();
+                                    }).catchError((error) {
+                                      setState(() => _saving = false);
+                                      Scaffold.of(context).showSnackBar(
+                                          SnackBar(content: Text(error.toString()), backgroundColor: Colors.red));
                                       this.widget._formKey.currentState.reset();
                                     });
                                   }
@@ -115,4 +120,12 @@ class _NewPersonalScoreState extends _NewMatchState {
     final MatchBloc _bloc = BlocProvider.of<MatchBloc>(context);
     return _bloc.addPersonalScore(dt: _dt, game: this.widget.game, player: _player, score: _score);
   }
+}
+
+class _RankScoreState extends _NewMatchState {
+  @override
+  List<Widget> formElements(BuildContext context) => [];
+
+  @override
+  Future save(BuildContext context) => Future.error('Not implemented');
 }
