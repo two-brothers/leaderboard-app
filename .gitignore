@@ -1,3 +1,6 @@
+# Release Signing Key
+android/key.properties
+
 # Miscellaneous
 *.class
 *.log
