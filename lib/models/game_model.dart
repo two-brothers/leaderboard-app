@@ -24,7 +24,7 @@ class GameModel extends Equatable {
     List<Record> leaderboard = (parsedJson['leaderboard'] as List).map((record) {
       switch (gameType) {
         case GameType.RANKING:
-          return null;
+          return RankedRecord.fromMap(record);
         case GameType.HIGH_SCORE: // intentional fall-through
         case GameType.LOW_SCORE:
           return ScoredRecord.fromMap(record);
