@@ -1,5 +1,6 @@
 # Release Signing Key
 android/key.properties
+android/leaderboard.jks
 
 # Miscellaneous
 *.class
