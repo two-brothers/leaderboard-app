@@ -1,8 +1,8 @@
-import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 
 import 'bloc/bloc_provider.dart';
 import 'bloc/player_bloc.dart';
+import 'form_submission_button.dart';
 
 class NewPlayer extends StatefulWidget {
   final String initialValue;
@@ -15,7 +15,6 @@ class NewPlayer extends StatefulWidget {
 
 class _NewPlayerState extends State<NewPlayer> {
   final _formKey = GlobalKey<FormState>();
-  bool _saving = false;
   String _name;
 
   @override
@@ -39,26 +38,11 @@ class _NewPlayerState extends State<NewPlayer> {
                             decoration: InputDecoration(hintText: 'Player Name'),
                             validator: (value) => value.isEmpty ? 'Enter player name' : null,
                             onSaved: (value) => setState(() => _name = value)),
-                        Center(
-                            child: Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: RaisedButton(
-                                    onPressed: () {
-                                      if (_formKey.currentState.validate()) {
-                                        _formKey.currentState.save();
-                                        setState(() => _saving = true);
-                                        _bloc.addPlayer(_name).then((_) {
-                                          setState(() => _saving = false);
-                                          Scaffold.of(context).showSnackBar(SnackBar(content: Text('Added $_name')));
-                                          _formKey.currentState.reset();
-                                        });
-                                      }
-                                    },
-                                    child: Text('CREATE', style: Theme.of(context).textTheme.button),
-                                    color: Theme.of(context).primaryColor))),
-                        ConditionalBuilder(
-                          condition: _saving,
-                          builder: (context) => Expanded(child: Center(child: CircularProgressIndicator())),
+                        FormSubmissionButton(
+                          formState: _formKey.currentState,
+                          onSubmit: () => _bloc.addPlayer(_name),
+                          buttonText: 'CREATE',
+                          onCompleteText: 'Added $_name',
                         )
                       ],
                     ))),
