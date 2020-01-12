@@ -9,7 +9,7 @@ abstract class Record {
 
   Record({@required this.dt, @required this.playerRef});
 
-  display(PlayerModel player);
+  String additionalInfo();
 }
 
 class ScoredRecord extends Record {
@@ -22,21 +22,20 @@ class ScoredRecord extends Record {
   }
 
   @override
-  display(PlayerModel player) {
-    return '${player.name} ( $score shots )';
+  additionalInfo() {
+    return '$score shots';
   }
 }
 
 class RankedRecord extends Record {
-
-  RankedRecord({@required dt, @required playerRef}): super(dt: dt, playerRef: playerRef);
+  RankedRecord({@required dt, @required playerRef}) : super(dt: dt, playerRef: playerRef);
 
   factory RankedRecord.fromMap(Map parsedJson) {
     return RankedRecord(dt: (parsedJson['date'] as Timestamp).toDate(), playerRef: parsedJson['player']);
   }
 
   @override
-  display(PlayerModel player) {
-    return player.name;
+  additionalInfo() {
+    return '';
   }
 }
