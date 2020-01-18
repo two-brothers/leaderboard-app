@@ -25,10 +25,8 @@ class Game extends StatelessWidget {
                 appBar: AppBar(title: Text(gameSnapshot.data.title)),
                 body: Container(
                     padding: EdgeInsets.all(16),
-                    child: Column(
-                      children: <Widget>[
-                        Text(gameSnapshot.data.summary, style: Theme.of(context).textTheme.title),
-                        Expanded(
+                    child: Column(children: <Widget>[
+                      Expanded(
                           child: ListView.builder(
                               itemCount: gameSnapshot.data.leaderboard.length,
                               itemBuilder: (context, index) => StreamBuilder<PlayerModel>(
@@ -36,14 +34,11 @@ class Game extends StatelessWidget {
                                   builder: (context, playerSnapshot) => playerSnapshot.hasData
                                       ? DisplayRecord(
                                           rank: index + 1, player: playerSnapshot.data, record: gameSnapshot.data.leaderboard[index])
-                                      : ListTile(title: Text('...')))),
-                        )
-                      ],
-                    )),
+                                      : ListTile(title: Text('...')))))
+                    ])),
                 floatingActionButton: FloatingActionButton(
                     child: Icon(Icons.add),
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NewMatch(game: gameSnapshot.data)))),
-              )
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NewMatch(game: gameSnapshot.data)))))
             : Center(child: CircularProgressIndicator()));
   }
 }

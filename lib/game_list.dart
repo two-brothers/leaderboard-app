@@ -25,9 +25,9 @@ class GameList extends StatelessWidget {
                 ? ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, index) => ListTile(
-                          title: Text('${snapshot.data[index].title}'),
-                          onTap: () => Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => Game(game: snapshot.data[index]))),
+                          title: Text(snapshot.data[index].title),
+                          subtitle: Text(snapshot.data[index].summary),
+                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Game(game: snapshot.data[index]))),
                         ))
                 : Center(child: CircularProgressIndicator())));
   }
