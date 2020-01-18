@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'bloc/bloc_provider.dart';
 import 'bloc/game_bloc.dart';
 import 'bloc/player_bloc.dart';
+import 'display_record.dart';
 import 'models/game_model.dart';
 import 'models/player_model.dart';
 import 'new_match.dart';
@@ -33,14 +34,9 @@ class Game extends StatelessWidget {
                               itemBuilder: (context, index) => StreamBuilder<PlayerModel>(
                                   stream: _playerBloc.getPlayerStreamByRef(gameSnapshot.data.leaderboard[index].playerRef),
                                   builder: (context, playerSnapshot) => playerSnapshot.hasData
-                                      ? ListTile(
-                                          leading: playerSnapshot.data.avatarUrl != null
-                                              ? CircleAvatar(backgroundImage: NetworkImage(playerSnapshot.data.avatarUrl))
-                                              : CircleAvatar(child: Text(playerSnapshot.data.name.substring(0, 1))),
-                                          title: Text('${index + 1}. ${playerSnapshot.data.name}'),
-                                    trailing: Text(gameSnapshot.data.leaderboard[index].additionalInfo()),
-                                  )
-                                      : ListTile(title: Text('${index + 1}. ...')))),
+                                      ? DisplayRecord(
+                                          rank: index + 1, player: playerSnapshot.data, record: gameSnapshot.data.leaderboard[index])
+                                      : ListTile(title: Text('...')))),
                         )
                       ],
                     )),

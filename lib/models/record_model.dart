@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../models/player_model.dart';
-
 abstract class Record {
   final DateTime dt;
   final DocumentReference playerRef;
