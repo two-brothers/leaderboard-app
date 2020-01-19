@@ -1,11 +1,14 @@
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 
 import 'bloc/bloc_provider.dart';
 import 'bloc/game_bloc.dart';
 import 'bloc/player_bloc.dart';
+import 'display_leader.dart';
 import 'display_record.dart';
 import 'models/game_model.dart';
 import 'models/player_model.dart';
+import 'models/record_model.dart';
 import 'new_match.dart';
 import 'stream_widget.dart';
 
@@ -23,17 +26,28 @@ class Game extends StatelessWidget {
         stream: _gameBloc.getGame(game.id),
         builder: (context, game) => Scaffold(
             appBar: AppBar(title: Text(game.title)),
-            body: Container(
-                padding: EdgeInsets.all(16),
-                child: Column(children: <Widget>[
-                  Expanded(
-                      child: ListView.builder(
-                          itemCount: game.leaderboard.length,
-                          itemBuilder: (context, index) => StreamWidget<PlayerModel>(
-                              stream: _playerBloc.getPlayerStreamByRef(game.leaderboard[index].playerRef),
-                              builder: (context, player) => DisplayRecord(rank: index + 1, player: player, record: game.leaderboard[index]),
-                              placeholder: ListTile(title: Text('...')))))
-                ])),
+            body: ConditionalBuilder(
+              condition: game.leaderboard.length > 0,
+              builder: (context) => Container(
+                  padding: EdgeInsets.all(16),
+                  child: Column(children: <Widget>[
+                    StreamWidget<PlayerModel>(
+                        stream: _playerBloc.getPlayerStreamByRef(game.leaderboard[0].playerRef),
+                        builder: (context, player) => DisplayLeader(player: player, record: game.leaderboard[0])),
+                    Expanded(
+                        child: ListView.builder(
+                            itemCount: game.leaderboard.length - 1,
+                            itemBuilder: (context, listIdx) {
+                              final int recordIdx = listIdx + 1; // this list starts from the second record (the leader is displayed above)
+                              final Record record = game.leaderboard[recordIdx];
+                              return StreamWidget<PlayerModel>(
+                                  stream: _playerBloc.getPlayerStreamByRef(record.playerRef),
+                                  builder: (context, player) =>
+                                      DisplayRecord(rank: recordIdx + 1, player: player, record: game.leaderboard[recordIdx]),
+                                  placeholder: ListTile(title: Text('...')));
+                            }))
+                  ])),
+            ),
             floatingActionButton: FloatingActionButton(
                 child: Icon(Icons.add),
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NewMatch(game: game))))),
