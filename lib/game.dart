@@ -29,11 +29,10 @@ class Game extends StatelessWidget {
                   Expanded(
                       child: ListView.builder(
                           itemCount: game.leaderboard.length,
-                          itemBuilder: (context, index) => StreamBuilder<PlayerModel>(
+                          itemBuilder: (context, index) => StreamWidget<PlayerModel>(
                               stream: _playerBloc.getPlayerStreamByRef(game.leaderboard[index].playerRef),
-                              builder: (context, playerSnapshot) => playerSnapshot.hasData
-                                  ? DisplayRecord(rank: index + 1, player: playerSnapshot.data, record: game.leaderboard[index])
-                                  : ListTile(title: Text('...')))))
+                              builder: (context, player) => DisplayRecord(rank: index + 1, player: player, record: game.leaderboard[index]),
+                              placeholder: ListTile(title: Text('...')))))
                 ])),
             floatingActionButton: FloatingActionButton(
                 child: Icon(Icons.add),
