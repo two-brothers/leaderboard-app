@@ -13,6 +13,23 @@ class DisplayRecord extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return rank == 1 ? leaderRecord() : challengerRecord();
+  }
+
+  Widget leaderRecord() {
+    return Card(
+        child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Row(children: <Widget>[
+              PlayerAvatar(player: player, radius: 50),
+              Column(children: [
+                Text(player.name, style: TextStyle(fontSize: 40)),
+                Text(record.additionalInfo(), style: TextStyle(fontSize: 18, color: Colors.black54))
+              ])
+            ], mainAxisAlignment: MainAxisAlignment.spaceAround)));
+  }
+
+  Widget challengerRecord() {
     return ListTile(
         leading: Text('$rank.'),
         title: Row(children: <Widget>[PlayerAvatar(player: player), Text(player.name)]),
