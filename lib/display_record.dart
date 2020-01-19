@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'models/player_model.dart';
 import 'models/record_model.dart';
+import 'player_avatar.dart';
 
 class DisplayRecord extends StatelessWidget {
   final int rank;
@@ -14,12 +15,7 @@ class DisplayRecord extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
         leading: Text('$rank.'),
-        title: Row(children: <Widget>[
-          player.avatarUrl != null
-              ? CircleAvatar(backgroundImage: NetworkImage(player.avatarUrl))
-              : CircleAvatar(child: Text(player.name.substring(0, 1))),
-          Text(player.name)
-        ]),
+        title: Row(children: <Widget>[PlayerAvatar(player: player), Text(player.name)]),
         trailing: Text(record.additionalInfo()));
   }
 }
