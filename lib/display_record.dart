@@ -31,8 +31,11 @@ class DisplayRecord extends StatelessWidget {
 
   Widget challengerRecord() {
     return ListTile(
-        leading: Text('$rank.'),
-        title: Row(children: <Widget>[PlayerAvatar(player: player), Text(player.name)]),
-        trailing: Text(record.additionalInfo()));
+        leading: Text('$rank.', style: TextStyle(color: Colors.black45)),
+        title: Row(children: <Widget>[
+          PlayerAvatar(player: player),
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 16), child: Text(player.name))
+        ]),
+        trailing: Text(record.additionalInfo(), style: TextStyle(color: Colors.black54)));
   }
 }
