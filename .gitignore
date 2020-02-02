@@ -24,6 +24,9 @@ android/leaderboard.jks
 # is commented out by default.
 #.vscode/
 
+# Signing key
+**/android/app/leaderboard.jks
+
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/
