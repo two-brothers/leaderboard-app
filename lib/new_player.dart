@@ -39,7 +39,7 @@ class _NewPlayerState extends State<NewPlayer> {
                             validator: (value) => value.isEmpty ? 'Enter player name' : null,
                             onSaved: (value) => setState(() => _name = value)),
                         FormSubmissionButton(
-                          formState: _formKey.currentState,
+                          formKey: _formKey,
                           onSubmit: () => _bloc.addPlayer(_name),
                           buttonText: 'CREATE',
                           onCompleteText: 'Added $_name',

@@ -39,34 +39,38 @@ abstract class _NewMatchState extends State<NewMatch> {
     return Scaffold(
         appBar: AppBar(title: Text('Record Match')),
         body: Builder(
-          builder: (BuildContext context) => SingleChildScrollView(
-            child: Container(
-                padding: EdgeInsets.all(16),
-                child: Form(
-                    key: this.widget._formKey,
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Text(this.widget.game.title, style: Theme.of(context).textTheme.title),
-                      ),
-                      DateTimeField(
-                          format: this.widget._format,
-                          initialValue: _dt,
-                          decoration: InputDecoration(hintText: 'Date of match'),
-                          validator: (value) => value == null ? 'Enter date of match' : null,
-                          onShowPicker: (context, currentValue) => showDatePicker(
-                              context: context, firstDate: DateTime(1900), initialDate: currentValue ?? DateTime.now(), lastDate: DateTime(2100)),
-                          onSaved: (value) => setState(() => _dt = value),
-                          readOnly: true),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: formElements(context),
-                      ),
-                      FormSubmissionButton(
-                          formState: this.widget._formKey.currentState, onSubmit: () => save(context), buttonText: 'RECORD', onCompleteText: 'Saved Record')
-                    ]))),
-          ),
-        ));
+            builder: (BuildContext context) => SingleChildScrollView(
+                child: Container(
+                    padding: EdgeInsets.all(16),
+                    child: Form(
+                        key: this.widget._formKey,
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: Text(this.widget.game.title, style: Theme.of(context).textTheme.title),
+                          ),
+                          DateTimeField(
+                              format: this.widget._format,
+                              initialValue: _dt,
+                              decoration: InputDecoration(hintText: 'Date of match'),
+                              validator: (value) => value == null ? 'Enter date of match' : null,
+                              onShowPicker: (context, currentValue) => showDatePicker(
+                                  context: context,
+                                  firstDate: DateTime(1900),
+                                  initialDate: currentValue ?? DateTime.now(),
+                                  lastDate: DateTime(2100)),
+                              onSaved: (value) => setState(() => _dt = value),
+                              readOnly: true),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: formElements(context),
+                          ),
+                          FormSubmissionButton(
+                              formKey: this.widget._formKey,
+                              onSubmit: () => save(context),
+                              buttonText: 'RECORD',
+                              onCompleteText: 'Saved Record')
+                        ]))))));
   }
 
   List<Widget> formElements(BuildContext context);
@@ -81,7 +85,9 @@ class _NewPersonalScoreState extends _NewMatchState {
   @override
   List<Widget> formElements(BuildContext context) => [
         PlayerSelectorFormField(
-            hintText: 'Player', validator: (value) => value == null ? 'Choose player' : null, onSaved: (value) => setState(() => _player = value)),
+            hintText: 'Player',
+            validator: (value) => value == null ? 'Choose player' : null,
+            onSaved: (value) => setState(() => _player = value)),
         TextFormField(
             decoration: InputDecoration(hintText: 'Score'),
             inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
@@ -104,9 +110,13 @@ class _RankScoreState extends _NewMatchState {
   @override
   List<Widget> formElements(BuildContext context) => [
         PlayerSelectorFormField(
-            hintText: 'Winner', validator: (value) => value == null ? 'Choose winner' : null, onSaved: (value) => setState(() => _winner = value)),
+            hintText: 'Winner',
+            validator: (value) => value == null ? 'Choose winner' : null,
+            onSaved: (value) => setState(() => _winner = value)),
         PlayerSelectorFormField(
-            hintText: 'Loser', validator: (value) => value == null ? 'Choose loser' : null, onSaved: (value) => setState(() => _loser = value))
+            hintText: 'Loser',
+            validator: (value) => value == null ? 'Choose loser' : null,
+            onSaved: (value) => setState(() => _loser = value))
       ];
 
   @override
