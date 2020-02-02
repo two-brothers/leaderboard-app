@@ -44,5 +44,7 @@ class _FormSubmissionButtonState extends State<FormSubmissionButton> {
                               Scaffold.of(context).showSnackBar(SnackBar(content: Text(error.toString()), backgroundColor: Colors.red)));
                     }
                   },
-                  child: Text(this.widget.buttonText, style: Theme.of(context).textTheme.button))));
+                  child: Text(this.widget.buttonText, style: Theme.of(context).textTheme.button),
+                  color: Theme.of(context).primaryColor,
+                )));
 }
