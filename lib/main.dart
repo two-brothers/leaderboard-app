@@ -5,7 +5,7 @@ import 'bloc/game_bloc.dart';
 import 'bloc/match_bloc.dart';
 import 'bloc/player_bloc.dart';
 import 'bloc/sports_bloc.dart';
-import 'sports_list.dart';
+import 'home.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           textTheme: TextTheme(
             button: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white),
           )),
-      home: SportsList(),
+      home: Home(),
     ));
   }
 
