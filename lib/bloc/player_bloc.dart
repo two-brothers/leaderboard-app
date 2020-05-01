@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../models/player_model.dart';
@@ -22,6 +23,9 @@ class PlayerBloc implements Bloc {
   }
 
   Future<DocumentReference> addPlayer(String name) => Firestore.instance.collection('players').add({'name': name});
+
+  Future<void> editPlayer({@required String id, @required String name}) =>
+      Firestore.instance.document('players/$id').setData({'name': name}, merge: true);
 
   Stream<List<PlayerModel>> get players {
     if (_playersController == null) {

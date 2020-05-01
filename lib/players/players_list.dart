@@ -5,6 +5,7 @@ import '../bloc/bloc_provider.dart';
 import '../bloc/player_bloc.dart';
 import '../models/player_model.dart';
 import '../common/stream_widget.dart';
+import 'edit_player.dart';
 
 class PlayersList extends StatelessWidget {
   @override
@@ -17,7 +18,9 @@ class PlayersList extends StatelessWidget {
             appBar: AppBar(title: Text("Players")),
             body: ListView.builder(
                 itemCount: players.length,
-                itemBuilder: (context, index) =>
-                    ListTile(leading: PlayerAvatar(player: players[index]), title: Text(players[index].name)))));
+                itemBuilder: (context, index) => ListTile(
+                    leading: PlayerAvatar(player: players[index]),
+                    title: Text(players[index].name),
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EditPlayer(player: players[index])))))));
   }
 }
