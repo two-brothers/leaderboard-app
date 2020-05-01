@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'bloc/bloc_provider.dart';
-import 'bloc/game_bloc.dart';
-import 'game.dart';
-import 'models/game_model.dart';
-import 'models/sports_model.dart';
-import 'stream_widget.dart';
+import '../bloc/bloc_provider.dart';
+import '../bloc/game_bloc.dart';
+import '../sports/game.dart';
+import '../models/game_model.dart';
+import '../models/sports_model.dart';
+import '../common/stream_widget.dart';
 
 class GameList extends StatelessWidget {
   final SportsModel sport;

@@ -2,10 +2,10 @@ import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 
-import 'bloc/bloc_provider.dart';
-import 'bloc/player_bloc.dart';
-import 'models/player_model.dart';
-import 'new_player.dart';
+import '../bloc/bloc_provider.dart';
+import '../bloc/player_bloc.dart';
+import '../models/player_model.dart';
+import '../players/new_player.dart';
 
 class PlayerSelectorFormField extends FormField<PlayerModel> {
   PlayerSelectorFormField(

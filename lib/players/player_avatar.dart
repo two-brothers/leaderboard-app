@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'models/player_model.dart';
+import '../models/player_model.dart';
 
 class PlayerAvatar extends StatelessWidget {
   final PlayerModel player;

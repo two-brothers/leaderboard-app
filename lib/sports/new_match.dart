@@ -3,12 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
-import 'bloc/bloc_provider.dart';
-import 'bloc/match_bloc.dart';
-import 'form_submission_button.dart';
-import 'models/game_model.dart';
-import 'models/player_model.dart';
-import 'player_selector_formfield.dart';
+import '../bloc/bloc_provider.dart';
+import '../bloc/match_bloc.dart';
+import '../common/form_submission_button.dart';
+import '../models/game_model.dart';
+import '../models/player_model.dart';
+import '../players/player_selector_formfield.dart';
 
 class NewMatch extends StatefulWidget {
   final GameModel game;

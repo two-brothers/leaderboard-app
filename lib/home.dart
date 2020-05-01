@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:leaderboard_app/sports_list.dart';
+import 'sports/sports_list.dart';
 
 class Home extends StatelessWidget {
   @override

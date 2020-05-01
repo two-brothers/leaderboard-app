@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'bloc/bloc_provider.dart';
-import 'bloc/sports_bloc.dart';
-import 'game_list.dart';
-import 'models/sports_model.dart';
-import 'stream_widget.dart';
+import '../bloc/bloc_provider.dart';
+import '../bloc/sports_bloc.dart';
+import '../sports/game_list.dart';
+import '../models/sports_model.dart';
+import '../common/stream_widget.dart';
 
 class SportsList extends StatelessWidget {
   @override

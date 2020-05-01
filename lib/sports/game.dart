@@ -1,16 +1,16 @@
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 
-import 'bloc/bloc_provider.dart';
-import 'bloc/game_bloc.dart';
-import 'bloc/player_bloc.dart';
-import 'display_leader.dart';
-import 'display_record.dart';
-import 'models/game_model.dart';
-import 'models/player_model.dart';
-import 'models/record_model.dart';
+import '../bloc/bloc_provider.dart';
+import '../bloc/game_bloc.dart';
+import '../bloc/player_bloc.dart';
+import '../sports/display_leader.dart';
+import '../sports/display_record.dart';
+import '../models/game_model.dart';
+import '../models/player_model.dart';
+import '../models/record_model.dart';
+import '../common/stream_widget.dart';
 import 'new_match.dart';
-import 'stream_widget.dart';
 
 class Game extends StatelessWidget {
   final GameModel game;

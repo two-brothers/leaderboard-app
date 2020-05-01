@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'models/player_model.dart';
-import 'models/record_model.dart';
-import 'player_avatar.dart';
+import '../models/player_model.dart';
+import '../models/record_model.dart';
+import '../players/player_avatar.dart';
 
 class DisplayRecord extends StatelessWidget {
   final int rank;

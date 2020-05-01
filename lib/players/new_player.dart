@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'bloc/bloc_provider.dart';
-import 'bloc/player_bloc.dart';
-import 'form_submission_button.dart';
+import '../bloc/bloc_provider.dart';
+import '../bloc/player_bloc.dart';
+import '../common/form_submission_button.dart';
 
 class NewPlayer extends StatefulWidget {
   final String initialValue;
