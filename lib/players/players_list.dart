@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../players/player_avatar.dart';
 import '../bloc/bloc_provider.dart';
 import '../bloc/player_bloc.dart';
 import '../models/player_model.dart';
@@ -16,7 +17,7 @@ class PlayersList extends StatelessWidget {
             appBar: AppBar(title: Text("Players")),
             body: ListView.builder(
                 itemCount: players.length,
-                itemBuilder: (context, index) => ListTile(title: Text('${players[index].name}'), onTap: () => null))),
-        placeholder: Center(child: CircularProgressIndicator()));
+                itemBuilder: (context, index) =>
+                    ListTile(leading: PlayerAvatar(player: players[index]), title: Text(players[index].name)))));
   }
 }
