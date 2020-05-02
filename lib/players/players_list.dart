@@ -6,6 +6,7 @@ import '../bloc/player_bloc.dart';
 import '../models/player_model.dart';
 import '../common/stream_widget.dart';
 import 'edit_player.dart';
+import 'new_player.dart';
 
 class PlayersList extends StatelessWidget {
   @override
@@ -21,6 +22,8 @@ class PlayersList extends StatelessWidget {
                 itemBuilder: (context, index) => ListTile(
                     leading: PlayerAvatar(player: players[index]),
                     title: Text(players[index].name),
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EditPlayer(player: players[index])))))));
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EditPlayer(player: players[index]))))),
+            floatingActionButton: FloatingActionButton(
+                child: Icon(Icons.add), onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NewPlayer())))));
   }
 }

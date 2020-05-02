@@ -20,7 +20,7 @@ class PlayerAvatar extends StatelessWidget {
             : (player.avatarUrl == null ? null : NetworkImage(player.avatarUrl)),
         backgroundColor: pseudorandomColor(player.id),
         child: this.overrideImage == null && player.avatarUrl == null
-            ? Text(player.name.substring(0, 1), style: TextStyle(backgroundColor: pseudorandomColor(player.id)))
+            ? Text(player.name?.substring(0, 1) ?? '', style: TextStyle(backgroundColor: pseudorandomColor(player.id)))
             : null,
         radius: radius);
   }
