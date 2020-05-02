@@ -39,7 +39,7 @@ class PlayerSelectorFormField extends FormField<PlayerModel> {
                                           icon: Icon(Icons.add),
                                           onPressed: () => Navigator.push(
                                                 context,
-                                                MaterialPageRoute(builder: (context) => NewPlayer(initialValue: name)),
+                                                MaterialPageRoute(builder: (context) => NewPlayer(name: name)),
                                               ))),
                                   itemBuilder: (context, player) => ListTile(title: Text(player.name)),
                                   itemFilter: (player, input) =>

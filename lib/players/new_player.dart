@@ -1,53 +1,29 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-import '../bloc/bloc_provider.dart';
+import '../models/player_model.dart';
+import '../players/player_fields.dart';
 import '../bloc/player_bloc.dart';
-import '../common/form_submission_button.dart';
 
-class NewPlayer extends StatefulWidget {
-  final String initialValue;
-
-  NewPlayer({this.initialValue});
+class NewPlayer extends PlayerFields {
+  NewPlayer({name}) : super(original: PlayerModel(name: name, id: 'X', avatarUrl: null));
 
   @override
-  _NewPlayerState createState() => _NewPlayerState();
+  _NewPlayerState createState() => _NewPlayerState(original.name);
 }
 
-class _NewPlayerState extends State<NewPlayer> {
-  final _formKey = GlobalKey<FormState>();
-  String _name;
+class _NewPlayerState extends PlayerFieldsState {
+  _NewPlayerState(String name) : super(name);
 
   @override
-  Widget build(BuildContext context) {
-    final PlayerBloc _bloc = BlocProvider.of<PlayerBloc>(context);
+  String title() => 'Create New Player';
 
-    return Scaffold(
-        appBar: AppBar(title: Text('Create New Player')),
-        body: Builder(
-          // use a builder so Scaffold.of will refer to this Scaffold,
-          // which is used in the FormSubmissionButton
-          builder: (BuildContext context) => SingleChildScrollView(
-            child: Container(
-                padding: EdgeInsets.all(16),
-                child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        TextFormField(
-                            initialValue: this.widget.initialValue,
-                            decoration: InputDecoration(hintText: 'Player Name'),
-                            validator: (value) => value.isEmpty ? 'Enter player name' : null,
-                            onSaved: (value) => setState(() => _name = value)),
-                        FormSubmissionButton(
-                          formKey: _formKey,
-                          onSubmit: () => _bloc.addPlayer(_name),
-                          buttonText: 'CREATE',
-                          onCompleteText: 'Added $_name',
-                        )
-                      ],
-                    ))),
-          ),
-        ));
-  }
+  @override
+  String submitText() => 'CREATE';
+
+  @override
+  String onCompleteText() => 'Added player';
+
+  @override
+  Future onSubmit(PlayerBloc _bloc, String _name, File _avatar) =>
+      _bloc.addPlayer(name: _name, avatar: _avatar);
 }

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -25,23 +26,25 @@ class PlayerBloc implements Bloc {
     return _players[playerRef];
   }
 
-  Future<DocumentReference> addPlayer(String name) => Firestore.instance.collection('players').add({'name': name});
+  Future<DocumentReference> addPlayer({@required String name, File avatar}) => _uploadAvatar(avatar).then((data) {
+        data.addAll({'name': name});
+        return data;
+      }).then((data) => Firestore.instance.collection('players').add(data));
 
-  Future<void> editPlayer({@required String id, @required String name, @required File avatar}) {
-    final String avatarFileName = 'avatar-$id';
+  Future<void> editPlayer({@required String id, @required String name, File avatar}) => _uploadAvatar(avatar).then((update) {
+        update.addAll({'name': name});
+        return update;
+      }).then((data) => Firestore.instance.document('players/$id').setData(data, merge: true));
 
-    Future<Map<String, String>> updateData = avatar == null
-        ? Future.value({'name': name})
-        : FirebaseStorage.instance
-            .ref()
-            .child(avatarFileName)
-            .putFile(avatar)
-            .onComplete
-            .then((snap) => snap.ref.getDownloadURL())
-            .then((url) => {'name': name, 'avatarUrl': url});
-
-    return updateData.then((data) => Firestore.instance.document('players/$id').setData(data, merge: true));
-  }
+  Future<Map<String, String>> _uploadAvatar(File avatar) => avatar == null
+      ? Future.value({})
+      : FirebaseStorage.instance
+          .ref()
+          .child('${Random().nextInt(10e6.toInt())}${Random().nextInt(10e6.toInt())}')
+          .putFile(avatar)
+          .onComplete
+          .then((snap) => snap.ref.getDownloadURL())
+          .then((url) => {'avatarUrl': url});
 
   Stream<List<PlayerModel>> get players {
     if (_playersController == null) {
