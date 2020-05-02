@@ -26,21 +26,21 @@ class PlayerBloc implements Bloc {
     return _players[playerRef];
   }
 
-  Future<DocumentReference> addPlayer({@required String name, File avatar}) => _uploadAvatar(avatar).then((data) {
-        data.addAll({'name': name});
-        return data;
-      }).then((data) => Firestore.instance.collection('players').add(data));
+  Future<void> addPlayer({@required String name, File avatar}) =>
+      // we need to create a document first so we can name the avatar based on the document ID
+      Firestore.instance.collection('players').add({'name': name})
+      .then((doc) => editPlayer(id: doc.documentID, name: name, avatar: avatar));
 
-  Future<void> editPlayer({@required String id, @required String name, File avatar}) => _uploadAvatar(avatar).then((update) {
+  Future<void> editPlayer({@required String id, @required String name, File avatar}) => _uploadAvatar(id, avatar).then((update) {
         update.addAll({'name': name});
         return update;
       }).then((data) => Firestore.instance.document('players/$id').setData(data, merge: true));
 
-  Future<Map<String, String>> _uploadAvatar(File avatar) => avatar == null
+  Future<Map<String, String>> _uploadAvatar(String id, File avatar) => avatar == null
       ? Future.value({})
       : FirebaseStorage.instance
           .ref()
-          .child('${Random().nextInt(10e6.toInt())}${Random().nextInt(10e6.toInt())}')
+          .child('avatar-$id')
           .putFile(avatar)
           .onComplete
           .then((snap) => snap.ref.getDownloadURL())
