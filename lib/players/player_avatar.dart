@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -7,15 +8,18 @@ import '../models/player_model.dart';
 class PlayerAvatar extends StatelessWidget {
   final PlayerModel player;
   final double radius;
+  final File overrideImage;
 
-  PlayerAvatar({@required this.player, this.radius});
+  PlayerAvatar({@required this.player, this.radius, this.overrideImage});
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-        backgroundImage: player.avatarUrl == null ? null : NetworkImage(player.avatarUrl),
+        backgroundImage: this.overrideImage != null
+            ? FileImage(this.overrideImage)
+            : (player.avatarUrl == null ? null : NetworkImage(player.avatarUrl)),
         backgroundColor: pseudorandomColor(player.id),
-        child: player.avatarUrl == null
+        child: this.overrideImage == null && player.avatarUrl == null
             ? Text(player.name.substring(0, 1), style: TextStyle(backgroundColor: pseudorandomColor(player.id)))
             : null,
         radius: radius);

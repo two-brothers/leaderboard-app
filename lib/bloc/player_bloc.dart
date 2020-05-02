@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -24,8 +27,21 @@ class PlayerBloc implements Bloc {
 
   Future<DocumentReference> addPlayer(String name) => Firestore.instance.collection('players').add({'name': name});
 
-  Future<void> editPlayer({@required String id, @required String name}) =>
-      Firestore.instance.document('players/$id').setData({'name': name}, merge: true);
+  Future<void> editPlayer({@required String id, @required String name, @required File avatar}) {
+    final String avatarFileName = 'avatar-$id';
+
+    Future<Map<String, String>> updateData = avatar == null
+        ? Future.value({'name': name})
+        : FirebaseStorage.instance
+            .ref()
+            .child(avatarFileName)
+            .putFile(avatar)
+            .onComplete
+            .then((snap) => snap.ref.getDownloadURL())
+            .then((url) => {'name': name, 'avatarUrl': url});
+
+    return updateData.then((data) => Firestore.instance.document('players/$id').setData(data, merge: true));
+  }
 
   Stream<List<PlayerModel>> get players {
     if (_playersController == null) {

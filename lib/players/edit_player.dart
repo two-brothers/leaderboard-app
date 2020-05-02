@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../bloc/bloc_provider.dart';
@@ -17,10 +20,11 @@ class EditPlayer extends StatefulWidget {
 
 class _EditPlayerState extends State<EditPlayer> {
   final _formKey = GlobalKey<FormState>();
-  String _name = '';
+  String _newName = '';
+  File _newAvatarFile;
 
   _EditPlayerState(PlayerModel player) {
-    this._name = player.name;
+    this._newName = player.name;
   }
 
   @override
@@ -30,34 +34,38 @@ class _EditPlayerState extends State<EditPlayer> {
     return Scaffold(
         appBar: AppBar(title: Text('Edit Player')),
         body: Builder(
-          // use a builder so Scaffold.of will refer to this Scaffold,
-          // which is used in the FormSubmissionButton
-          builder: (BuildContext context) => SingleChildScrollView(
-            child: Container(
-                padding: EdgeInsets.all(16),
-                child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Center(
-                            child: PlayerAvatar(
-                                player: PlayerModel(id: this.widget.player.id, name: _name, avatarUrl: this.widget.player.avatarUrl),
-                                radius: 50)),
-                        TextFormField(
-                            initialValue: _name,
-                            decoration: InputDecoration(hintText: 'Player Name'),
-                            validator: (value) => value.isEmpty ? 'Enter player name' : null,
-                            onSaved: (value) => setState(() => _name = value)),
-                        FormSubmissionButton(
-                          formKey: _formKey,
-                          onSubmit: () => _bloc.editPlayer(id: this.widget.player.id, name: _name),
-                          buttonText: 'EDIT',
-                          onCompleteText: 'Updated player',
-                        )
-                      ],
-                    ))),
-          ),
-        ));
+            // use a builder so Scaffold.of will refer to this Scaffold,
+            // which is used in the FormSubmissionButton
+            builder: (BuildContext context) => SingleChildScrollView(
+                child: Container(
+                    padding: EdgeInsets.all(16),
+                    child: Form(
+                        key: _formKey,
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                          Center(
+                              child: Column(children: <Widget>[
+                            PlayerAvatar(
+                                player: PlayerModel(id: this.widget.player.id, name: _newName, avatarUrl: this.widget.player.avatarUrl),
+                                overrideImage: _newAvatarFile,
+                                radius: 50),
+                            IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () async {
+                                  File avatar = await FilePicker.getFile(type: FileType.image);
+                                  setState(() => _newAvatarFile = avatar);
+                                })
+                          ])),
+                          TextFormField(
+                              initialValue: _newName,
+                              decoration: InputDecoration(hintText: 'Player Name'),
+                              validator: (value) => value.isEmpty ? 'Enter player name' : null,
+                              onSaved: (value) => setState(() => _newName = value)),
+                          FormSubmissionButton(
+                            formKey: _formKey,
+                            onSubmit: () => _bloc.editPlayer(id: this.widget.player.id, name: _newName, avatar: _newAvatarFile),
+                            buttonText: 'SAVE',
+                            onCompleteText: 'Updated player',
+                          )
+                        ]))))));
   }
 }
