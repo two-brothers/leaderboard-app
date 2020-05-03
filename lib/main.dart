@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wakelock/wakelock.dart';
 
 import 'bloc/bloc_provider.dart';
 import 'bloc/game_bloc.dart';
@@ -12,6 +13,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Wakelock.enable();
     return _provideBlocs(MaterialApp(
       title: 'Leaderboard',
       theme: ThemeData(
