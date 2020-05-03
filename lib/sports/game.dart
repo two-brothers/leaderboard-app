@@ -33,7 +33,8 @@ class Game extends StatelessWidget {
                   child: Column(children: <Widget>[
                     StreamWidget<PlayerModel>(
                         stream: _playerBloc.getPlayerStreamByRef(game.leaderboard[0].playerRef),
-                        builder: (context, player) => DisplayLeader(player: player, record: game.leaderboard[0])),
+                        builder: (context, player) =>
+                            DisplayLeader(player: player, record: game.leaderboard[0], winningStreak: game.winningStreak)),
                     Expanded(
                         child: ListView.builder(
                             itemCount: game.leaderboard.length - 1,

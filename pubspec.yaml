@@ -14,7 +14,7 @@ description: A leaderboard for multiple competitions
 version: 0.2.0+4
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
 
 dependencies:
   flutter:

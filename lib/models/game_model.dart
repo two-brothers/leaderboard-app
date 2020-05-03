@@ -10,6 +10,7 @@ class GameModel extends Equatable {
   final GameType gameType;
   final String summary;
   final List<Record> leaderboard;
+  final int winningStreak; // only applies to ranked games
 
   GameModel(
       {@required this.id,
@@ -17,7 +18,8 @@ class GameModel extends Equatable {
       @required this.sportId,
       @required this.gameType,
       @required this.summary,
-      @required this.leaderboard});
+      @required this.leaderboard,
+      this.winningStreak});
 
   factory GameModel.fromJson(String id, Map<String, dynamic> parsedJson) {
     GameType gameType = GameType.values[parsedJson['gameType']];
@@ -39,7 +41,8 @@ class GameModel extends Equatable {
         sportId: parsedJson['sportId'],
         gameType: GameType.values[parsedJson['gameType']],
         summary: parsedJson['summary'],
-        leaderboard: leaderboard);
+        leaderboard: leaderboard,
+        winningStreak: parsedJson['winningStreak']);
   }
 
   // Two objects with the same id will be assumed to be identical
