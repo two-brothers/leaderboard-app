@@ -12,6 +12,8 @@ android/leaderboard.jks
 .buildlog/
 .history
 .svn/
+.gradle
+local.properties
 
 # IntelliJ related
 *.iml
