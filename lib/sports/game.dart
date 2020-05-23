@@ -1,6 +1,6 @@
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:leaderboard_app/sports/eight_ball.dart';
+import 'package:leaderboard_app/sports/eight_ball_config.dart';
 
 import '../bloc/bloc_provider.dart';
 import '../bloc/game_bloc.dart';
@@ -36,7 +36,7 @@ class Game extends StatelessWidget {
                       RaisedButton(
                         child: Text("Start Game"),
                         onPressed: () =>
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => EightBall())),
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => EightBallConfig())),
                       ),
                     StreamWidget<PlayerModel>(
                         stream: _playerBloc.getPlayerStreamByRef(game.leaderboard[0].playerRef),
