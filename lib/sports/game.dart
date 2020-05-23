@@ -36,7 +36,7 @@ class Game extends StatelessWidget {
                       RaisedButton(
                         child: Text("Start Game"),
                         onPressed: () =>
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => EightBall(id: game.id))),
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => EightBall())),
                       ),
                     StreamWidget<PlayerModel>(
                         stream: _playerBloc.getPlayerStreamByRef(game.leaderboard[0].playerRef),
