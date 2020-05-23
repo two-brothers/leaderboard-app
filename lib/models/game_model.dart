@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 
+import 'score_model.dart';
 import 'record_model.dart';
 
 class GameModel extends Equatable {
@@ -11,6 +12,7 @@ class GameModel extends Equatable {
   final String summary;
   final List<Record> leaderboard;
   final int winningStreak; // only applies to ranked games
+  final List<Score> active;
 
   GameModel(
       {@required this.id,
@@ -19,7 +21,8 @@ class GameModel extends Equatable {
       @required this.gameType,
       @required this.summary,
       @required this.leaderboard,
-      this.winningStreak});
+      this.winningStreak,
+      this.active});
 
   factory GameModel.fromJson(String id, Map<String, dynamic> parsedJson) {
     GameType gameType = GameType.values[parsedJson['gameType']];
@@ -35,6 +38,8 @@ class GameModel extends Equatable {
       }
     }).toList();
 
+    List<Score> scores = (parsedJson['active'] as List).map((active) => Score(score: active['score'], playerRef: active['player'])).toList();
+
     return GameModel(
         id: id,
         title: parsedJson['title'],
@@ -42,7 +47,9 @@ class GameModel extends Equatable {
         gameType: GameType.values[parsedJson['gameType']],
         summary: parsedJson['summary'],
         leaderboard: leaderboard,
-        winningStreak: parsedJson['winningStreak']);
+        winningStreak: parsedJson['winningStreak'],
+        active: scores
+    );
   }
 
   // Two objects with the same id will be assumed to be identical
