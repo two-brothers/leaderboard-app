@@ -11,9 +11,11 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Leaderboard',
       routes: {
-        "/": (_) => WebviewScaffold(
-              url: "https://leaderboard-19f69.web.app/leaderboards",
-            )
+        "/": (_) => SafeArea(
+              child: WebviewScaffold(
+                url: "https://leaderboard-19f69.web.app/leaderboards",
+              ),
+            ),
       },
     );
   }
