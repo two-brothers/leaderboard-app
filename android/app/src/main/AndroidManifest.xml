@@ -12,7 +12,7 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="leaderboard_app"
+        android:label="Leaderboard"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
