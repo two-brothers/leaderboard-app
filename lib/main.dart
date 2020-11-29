@@ -16,6 +16,7 @@ class App extends StatelessWidget {
         "/": (_) => SafeArea(
               child: WebviewScaffold(
                 url: "https://leaderboard-19f69.web.app/leaderboards",
+                appCacheEnabled: false,
               ),
             ),
       },
